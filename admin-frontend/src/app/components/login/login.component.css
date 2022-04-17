@@ -1,0 +1,50 @@
+.navigation ul li:hover a span,
+.navigation ul li.hovered a span {
+    transform-origin: 0% 50%;
+    transform: scale(1.03);
+}
+
+.navigation ul li a {
+    cursor: default;
+}
+
+.centered {
+    height: 80vh;
+}
+
+.login-container, .centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  input[type=submit] {
+    width: 100%;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    transform: scale(1.05);
+  }
+
+.separator {
+    height: 10px;
+    width: 80%;
+}

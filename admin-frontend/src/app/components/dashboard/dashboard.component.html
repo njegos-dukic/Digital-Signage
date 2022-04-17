@@ -1,0 +1,226 @@
+<div class="body">
+<div class="container">
+  <div class="navigation">
+    <ul>
+      <li style="margin-top: 1vh">
+        <a href="#">
+          <span style="margin-top: 3px;" class="icon"><ion-icon name="tv-outline"></ion-icon></span>
+          <span class="title"><h4>Pametni Bilbord</h4></span>
+        </a>
+      </li>
+      <li class="selected">
+        <a href="#">
+          <span style="color: var(--color-primary); margin-top: 3px;" class="icon"><ion-icon name="home-outline"></ion-icon></span>
+          <span style="color: var(--color-primary);" class="title">Početna</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span style="margin-top: 3px;" class="icon"><ion-icon name="albums-outline"></ion-icon></span>
+          <span class="title">Bilbordi</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span style="margin-top: 3px;" class="icon"><ion-icon name="images-outline"></ion-icon></span>
+          <span class="title">Reklame</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span style="margin-top: 3px;" class="icon"><ion-icon name="person-outline"></ion-icon></span>
+          <span class="title">Korisnici</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span style="margin-top: 3px;" class="icon"><ion-icon name="chatbox-ellipses-outline"></ion-icon></span>
+          <span class="title">Poruke</span>
+        </a>
+      </li>
+      <li style="position: absolute; top: 88vh;">
+        <a href="#">
+          <span style="margin-top: 3px;" class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+          <span class="title">Odjavi se</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div (click)="showSidebar()" class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+      </div>
+      <div> 
+        <button (click)="updateTheme('rgb(149, 81, 81)')" style="border-radius: 50%; background-color: rgb(149, 81, 81); width: 30px; height: 30px;">&nbsp;</button>
+      </div> 
+      <div> 
+        <button (click)="updateTheme('rgb(61, 59, 122)')" style="border-radius: 50%; background-color: rgb(61, 59, 122); width: 30px; height: 30px;">&nbsp;</button>
+      </div> 
+      <div> 
+        <button (click)="updateTheme('rgb(15, 113, 48)')" style="border-radius: 50%; background-color: rgb(15, 113, 48); width: 30px; height: 30px;">&nbsp;</button>
+      </div> 
+      <div> 
+        <button (click)="updateTheme('rgb(176, 158, 57)')" style="border-radius: 50%; background-color: rgb(176, 158, 57); width: 30px; height: 30px;">&nbsp;</button>
+      </div> 
+      <div> 
+        <button (click)="updateTheme('rgb(105, 48, 88)')" style="border-radius: 50%; background-color: rgb(105, 48, 88); width: 30px; height: 30px;">&nbsp;</button>
+      </div> 
+      <div> 
+        <button (click)="updateTheme('rgb(227, 165, 57)')" style="border-radius: 50%; background-color: rgb(227, 165, 57); width: 30px; height: 30px;">&nbsp;</button>
+      </div> 
+      <div class="user">
+        <img style="scale: 0.7;" src="../../../assets/red-logo.png" alt="Logo">
+      </div>
+    </div>
+
+    <div class="cardBox">
+      <div class="card">
+        <div>
+          <div class="numbers">1,504</div>
+          <div class="cardName">Posjeta</div>
+        </div>
+        <div class="iconBx">
+          <ion-icon name="eye-outline"></ion-icon>
+        </div>
+      </div>
+    
+    
+      <div class="card">
+        <div>
+          <div class="numbers">75</div>
+          <div class="cardName">Novih reklama</div>
+        </div>
+        <div class="iconBx">
+          <ion-icon name="cart-outline"></ion-icon>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div>
+          <div class="numbers">12</div>
+          <div class="cardName">Poruka</div>
+        </div>
+        <div class="iconBx">
+          <ion-icon name="chatbubbles-outline"></ion-icon>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div>
+          <div class="numbers">BAM&nbsp;7.842&nbsp;&nbsp;</div>
+          <div class="cardName">Zarada</div>
+        </div>
+        <div class="iconBx">
+          <ion-icon name="cash-outline"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="details">
+      <div class="recentOrders">
+        <div class="cardHeader">
+          <h2>Poslednje narudžbe</h2>
+          <a href="#" class="btn">Vidi više</a>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <td>Klijent</td>
+              <td>Bilbord</td>
+              <td>Reklama</td>
+              <td>Cijena</td>
+              <td>Status</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bilbo Bilbordić</td>
+              <td>Delta 1</td>
+              <td>Chipsy s Mesijem</td>
+              <td>BAM&nbsp;384.50</td>
+              <td><span class="status delivered">Odobreno</span></td>
+            </tr>
+            <tr>
+              <td>Brusli Karatić</td>
+              <td>Boska</td>
+              <td>Novi audi onaj crni</td>
+              <td>BAM&nbsp;731.50</td>
+              <td><span class="status pending">Na&nbsp;čekanju</span></td>
+            </tr>
+            <tr>
+              <td>Musolini Hitler</td>
+              <td>Čajavec</td>
+              <td>Moj kamp</td>
+              <td>BAM&nbsp;1231.50</td>
+              <td><span class="status return">Odbijeno</span></td>
+            </tr>
+            <tr>
+              <td>Saša Kovačević</td>
+              <td>Boska 2</td>
+              <td>Leto je vrelo je</td>
+              <td>BAM&nbsp;621.50</td>
+              <td><span class="status inprogress">Obrađuje&nbsp;se</span></td>
+            </tr>
+            <tr>
+              <td>Miloš Biković</td>
+              <td>ETF</td>
+              <td>Montevideo</td>
+              <td>BAM&nbsp;5121.50</td>
+              <td><span class="status delivered">Odobreno</span></td>
+            </tr>
+            <tr>
+              <td>Joka Nikolić</td>
+              <td>Stanica</td>
+              <td>NBA Finale</td>
+              <td>BAM&nbsp;561.30</td>
+              <td><span class="status inprogress">Obrađuje&nbsp;se</span></td>
+            </tr>
+            <tr>
+              <td>Nemanja Bjelica</td>
+              <td>Lesnina</td>
+              <td>Rođendan</td>
+              <td>BAM&nbsp;71.30</td>
+              <td><span class="status return">Odbijeno</span></td>
+            </tr>
+            <tr>
+              <td>Marin Marinović</td>
+              <td>Centar</td>
+              <td>Smoki</td>
+              <td>BAM&nbsp;751.30</td>
+              <td><span class="status delivered">Odobreno</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    <div class="recentCustomers">
+      <div class="cardHeader">
+          <h2>Novosti</h2>
+        </div>
+        <table>
+          <tr>
+            <td width="60px"><div class="imgBx"><img style="scale: 0.7" src="../../../assets/blue-logo.png" alt="Novost"></div></td>
+            <td><h4>Mitar Mirić<br><span>Kreirao nalog u 16:48.</span></h4></td>
+          </tr>
+          <tr>
+            <td width="60px"><div class="imgBx"><img style="scale: 0.7" src="../../../assets/blue-logo.png" alt="Novost"></div></td>
+            <td><h4>Brusli Karatić<br><span>Dostavio reklamu u 16:04.</span></h4></td>
+          </tr>
+          <tr>
+            <td width="60px"><div class="imgBx"><img style="scale: 0.7" src="../../../assets/blue-logo.png" alt="Novost"></div></td>
+            <td><h4>Nenad Nešić<br><span>Poslao poruku u 15:27.</span></h4></td>
+          </tr>
+          <tr>
+            <td width="60px"><div class="imgBx"><img style="scale: 0.7" src="../../../assets/blue-logo.png" alt="Novost"></div></td>
+            <td><h4>Nataša Bekvalac<br><span>Poslala poruku u 14:49.</span></h4></td>
+          </tr>
+        </table>
+    </div>
+
+    </div>
+
+  </div>
+</div>
+</div>

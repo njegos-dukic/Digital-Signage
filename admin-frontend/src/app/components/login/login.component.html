@@ -1,0 +1,66 @@
+<div class="body">
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li style="margin-top: 1vh">
+            <a href="#">
+              <span style="margin-top: 3px;" class="icon"><ion-icon name="tv-outline"></ion-icon></span>
+              <span class="title"><h4>Pametni Bilbord</h4></span>
+            </a>
+          </li>
+          <li style="margin-top: 30vh">
+            <a href="#">
+                <span style="margin-top: 3px;" class="icon"><ion-icon name="log-in-outline"></ion-icon></span>
+                <span class="title"><h4>Dobro došli na administratorsku stranicu aplikacije Smart Billboard.<br><br>Prijavite se da biste nastavili.</h4></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    
+      <div class="main">
+        <div class="topbar">
+          <div (click)="showSidebar()" class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+          </div>
+          <div> 
+            <button (click)="updateTheme('rgb(149, 81, 81)')" style="border-radius: 50%; background-color: rgb(149, 81, 81); width: 30px; height: 30px;">&nbsp;</button>
+          </div> 
+          <div> 
+            <button (click)="updateTheme('rgb(61, 59, 122)')" style="border-radius: 50%; background-color: rgb(61, 59, 122); width: 30px; height: 30px;">&nbsp;</button>
+          </div> 
+          <div> 
+            <button (click)="updateTheme('rgb(15, 113, 48)')" style="border-radius: 50%; background-color: rgb(15, 113, 48); width: 30px; height: 30px;">&nbsp;</button>
+          </div> 
+          <div> 
+            <button (click)="updateTheme('rgb(176, 158, 57)')" style="border-radius: 50%; background-color: rgb(176, 158, 57); width: 30px; height: 30px;">&nbsp;</button>
+          </div> 
+          <div> 
+            <button (click)="updateTheme('rgb(105, 48, 88)')" style="border-radius: 50%; background-color: rgb(105, 48, 88); width: 30px; height: 30px;">&nbsp;</button>
+          </div> 
+          <div> 
+            <button (click)="updateTheme('rgb(227, 165, 57)')" style="border-radius: 50%; background-color: rgb(227, 165, 57); width: 30px; height: 30px;">&nbsp;</button>
+          </div> 
+          <div class="user">
+            <img style="scale: 0.7;" src="../../../assets/red-logo.png" alt="Logo">
+          </div>
+        </div>
+    
+        <div style="grid-template-columns: 1fr;" class="centered details">
+          <div class="recentOrders">
+            <div class="cardHeader">
+              <h2>&nbsp;&nbsp;Pametni Bilbord Admin</h2>
+            </div>
+            <div class="cardHeader">
+                <div class="login-container">
+                    <input type="text" placeholder="Korisničko ime">
+                    <input type="password" placeholder="Lozinka">
+                    <div class="separator"></div>
+                    <a href="mailto:njegos.dukic.998@gmail.com?subject=Smart Bilboard - Administratorska lozinka&body=Molim Vas da resetujete administratorsku lozinku za nalog povezan sa ovim mejlom.">Zaboravljena lozinka</a>
+                    <div class="separator"></div>
+                    <input type="submit" value="Prijavi se">
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
