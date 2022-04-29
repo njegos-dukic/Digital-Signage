@@ -63,6 +63,9 @@
   background: #fff;
 }
 
+.navigation ul li a span {
+  transition: all 0.3s ease;
+}
 
 .navigation ul li:hover a span,
 .navigation ul li.hovered a span {
@@ -354,7 +357,7 @@
 }
 
 .status.delivered {
-  padding: 2px 4px;
+  padding: 6px 12px;
   background: #8de02c;
   color: #fff;
   border-radius: 4px;
@@ -363,7 +366,7 @@
 }
 
 .status.pending {
-  padding: 2px 4px;
+  padding: 6px 12px;
   background: #f9ca3f;
   color: #fff;
   border-radius: 4px;
@@ -372,7 +375,7 @@
 }
 
 .status.return {
-  padding: 2px 4px;
+  padding: 6px 12px;
   background: #f00;
   color: #fff;
   border-radius: 4px;
@@ -381,7 +384,7 @@
 }
 
 .status.inprogress {
-  padding: 2px 4px;
+  padding: 6px 12px;
   background: #1795ce;
   color: #fff;
   border-radius: 4px;
@@ -514,4 +517,8 @@
     left: initial;
     color: #fff;
   }
+}
+
+.clicable:hover {
+  cursor: pointer;
 }

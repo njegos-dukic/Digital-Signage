@@ -7,16 +7,20 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { IonicModule } from '@ionic/angular';
 import { BillboardsComponent } from './components/billboards/billboards.component';
 import { LoginComponent } from './components/login/login.component';
+import { UsersComponent } from './components/users/users.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     BillboardsComponent,
-    LoginComponent
+    LoginComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     IonicModule.forRoot()
   ],

@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class UserDto {
+public class AdminUserDto {
 
     @NotNull
     private Integer id;
@@ -13,4 +13,6 @@ public class UserDto {
     private String username;
     @NotNull
     private String email;
+    @NotNull
+    private Boolean deleted;
 }
