@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Layout, Container, BoxUpload, ImagePreview } from "../style/styled";
 import Button from '@mui/material/Button';
@@ -44,6 +45,13 @@ const data = {
 
 function Statistic() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      navigate('/login');
+    }
+   }, []);
+   
   return (
     <Layout>
     <Container>

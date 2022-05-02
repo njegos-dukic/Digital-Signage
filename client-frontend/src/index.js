@@ -8,6 +8,7 @@ import Register from './components/register';
 import Statistic from './components/statistic';
 import History from './components/history';
 
+
 ReactDOM.render(
   <BrowserRouter>
     <Routes>

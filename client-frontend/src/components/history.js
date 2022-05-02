@@ -10,6 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
 
 function createData(name, billboard, start, end, price, media) {
   return { name, billboard, start, end, price, media };
@@ -23,6 +24,13 @@ const orders = [
 
 
 function History() {
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      navigate('/login');
+    }
+   }, []);
+
+
   const navigate = useNavigate();
   return (
     <Layout>
