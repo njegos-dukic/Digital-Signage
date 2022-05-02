@@ -25,10 +25,10 @@ public class BillboardEntity {
     private Double dailyRate;
 
     @Column(name = "available", nullable = false)
-    private Integer available;
+    private Boolean available = true;
 
     @Column(name = "deleted", nullable = false)
-    private Integer deleted;
+    private Boolean deleted = false;
 
     @Column(name = "lat")
     private Double lat;

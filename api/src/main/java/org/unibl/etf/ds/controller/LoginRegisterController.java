@@ -21,6 +21,11 @@ public class LoginRegisterController {
         return loginRegisterService.login(loginDto);
     }
 
+    @PostMapping("/admin-login")
+    public UserDto adminLogin(@Validated @RequestBody LoginDto loginDto) {
+        return loginRegisterService.adminlogin(loginDto);
+    }
+
     @PostMapping("/register")
     public UserDto register(@Validated @RequestBody RegisterDto registerDto) {
         return loginRegisterService.register(registerDto);

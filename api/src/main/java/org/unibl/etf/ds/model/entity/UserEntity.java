@@ -27,6 +27,9 @@ public class UserEntity {
     @Column(name = "email", nullable = false, length = 512)
     private String email;
 
-    @Column(name = "deleted", nullable = false)
-    private Boolean deleted = false;
+    @Column(name = "disabled", nullable = false)
+    private Boolean disabled = false;
+
+    @Column(name = "is_admin", nullable = false)
+    private Boolean isAdmin = false;
 }

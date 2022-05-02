@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user';
 import { UserId } from '../interfaces/userId';
+import { NewUser } from '../interfaces/newUser';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,17 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  
   getUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.urlBase);
+  }
+
+  addUser(user: NewUser): Observable<User> {
+    let url = "https://localhost:9000/api/v1/register"
+    return this.httpClient.post<User>(url, user);
+  }
+
+  updateUser(user: User): Observable<User> {
+    return this.httpClient.put<User>(this.urlBase, user);
   }
 
   toggleStatus(userId: UserId): Observable<void> {

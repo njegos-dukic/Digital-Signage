@@ -33,6 +33,10 @@ public class LoginRegisterService {
 
     public UserDto login(LoginDto loginDto) {
         UserEntity userEntity = userRepository.findByUsername(loginDto.getUsername());
+        if (userEntity == null) {
+            throw new HttpException(HttpStatus.UNAUTHORIZED, "Credentials invalid.");
+        }
+
         if (canLogin(userEntity, loginDto.getPassword())) {
             return modelMapper.map(userEntity, UserDto.class);
         }
@@ -40,8 +44,21 @@ public class LoginRegisterService {
         throw new HttpException(HttpStatus.UNAUTHORIZED, "Credentials invalid.");
     }
 
+    public UserDto adminlogin(LoginDto loginDto) {
+        UserEntity userEntity = userRepository.findByUsername(loginDto.getUsername());
+        if (userEntity == null) {
+            throw new HttpException(HttpStatus.UNAUTHORIZED, "Credentials invalid.");
+        }
+
+        if (canLogin(userEntity, loginDto.getPassword()) && userEntity.getIsAdmin()) {
+            return modelMapper.map(userEntity, UserDto.class);
+        }
+
+        throw new HttpException(HttpStatus.UNAUTHORIZED, "Credentials invalid.");
+    }
+
     private Boolean canLogin(UserEntity userEntity, String password) {
-        if (userEntity.getDeleted()) {
+        if (userEntity.getDisabled()) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Account is disabled.");
         }
         return passwordEncoder.matches(password, userEntity.getPassword());

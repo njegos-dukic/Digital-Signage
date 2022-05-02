@@ -9,6 +9,11 @@ import { BillboardsComponent } from './components/billboards/billboards.componen
 import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { FeedbackComponent } from './components/feedback/feedback.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -16,13 +21,25 @@ import { HttpClientModule } from '@angular/common/http';
     DashboardComponent,
     BillboardsComponent,
     LoginComponent,
-    UsersComponent
+    UsersComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    IonicModule.forRoot()
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAVAvR3L62GMy9JeGlQapa1kJXVOLUAPEU'
+
+    }),
+    IonicModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 2500,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

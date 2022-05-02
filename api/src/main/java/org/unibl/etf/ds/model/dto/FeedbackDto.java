@@ -2,13 +2,14 @@ package org.unibl.etf.ds.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class UserIdDto {
+@NoArgsConstructor
+public class FeedbackDto {
 
-    @NotNull(message = "Id cannot be null.")
     private Integer id;
+    private String content;
+    private AdminUserDto user;
 }

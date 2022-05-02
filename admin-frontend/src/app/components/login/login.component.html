@@ -52,12 +52,12 @@
             </div>
             <div class="cardHeader">
                 <div class="login-container">
-                    <input type="text" placeholder="Korisničko ime">
-                    <input type="password" placeholder="Lozinka">
+                    <input type="text" placeholder="Korisničko ime" required [(ngModel)]="credentials.username" [ngModelOptions]="{standalone: true}">
+                    <input type="password" placeholder="Lozinka" required [(ngModel)]="credentials.password" [ngModelOptions]="{standalone: true}">
                     <div class="separator"></div>
                     <a href="mailto:njegos.dukic.998@gmail.com?subject=Smart Bilboard - Administratorska lozinka&body=Molim Vas da resetujete administratorsku lozinku za nalog povezan sa ovim mejlom.">Zaboravljena lozinka</a>
                     <div class="separator"></div>
-                    <input type="submit" value="Prijavi se">
+                    <input (click)="login()" type="submit" value="Prijavi se">
                 </div>
             </div>
           </div>

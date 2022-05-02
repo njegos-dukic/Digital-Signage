@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+/// <reference types="@types/googlemaps" />
+declare var google: any;
 
 @Component({
   selector: 'app-root',

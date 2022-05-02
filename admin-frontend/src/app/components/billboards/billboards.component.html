@@ -1,218 +1,272 @@
 <div class="body">
-    <div class="container">
-      <div class="navigation">
-        <ul>
-          <li style="margin-top: 1vh">
-            <a href="#">
-              <span style="margin-top: 3px;" class="icon"><ion-icon name="tv-outline"></ion-icon></span>
-              <span class="title"><h4>Pametni Bilbord</h4></span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span style="margin-top: 3px;" class="icon"><ion-icon name="home-outline"></ion-icon></span>
-              <span class="title">Početna</span>
-            </a>
-          </li>
-          <li class="selected">
-            <a href="#">
-              <span style="color: var(--color-primary); margin-top: 3px;" class="icon"><ion-icon name="albums-outline"></ion-icon></span>
-              <span style="color: var(--color-primary);" class="title">Bilbordi</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span style="margin-top: 3px;" class="icon"><ion-icon name="images-outline"></ion-icon></span>
-              <span class="title">Reklame</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span style="margin-top: 3px;" class="icon"><ion-icon name="person-outline"></ion-icon></span>
-              <span class="title">Korisnici</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span style="margin-top: 3px;" class="icon"><ion-icon name="chatbox-ellipses-outline"></ion-icon></span>
-              <span class="title">Poruke</span>
-            </a>
-          </li>
-          <li style="position: absolute; top: 88vh;">
-            <a href="#">
-              <span style="margin-top: 3px;" class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
-              <span class="title">Odjavi se</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    
-      <div class="main">
-        <div class="topbar">
-          <div (click)="showSidebar()" class="toggle">
-            <ion-icon name="menu-outline"></ion-icon>
-          </div>
-          <div> 
-            <button (click)="updateTheme('rgb(149, 81, 81)')" style="border-radius: 50%; background-color: rgb(149, 81, 81); width: 30px; height: 30px;">&nbsp;</button>
-          </div> 
-          <div> 
-            <button (click)="updateTheme('rgb(61, 59, 122)')" style="border-radius: 50%; background-color: rgb(61, 59, 122); width: 30px; height: 30px;">&nbsp;</button>
-          </div> 
-          <div> 
-            <button (click)="updateTheme('rgb(15, 113, 48)')" style="border-radius: 50%; background-color: rgb(15, 113, 48); width: 30px; height: 30px;">&nbsp;</button>
-          </div> 
-          <div> 
-            <button (click)="updateTheme('rgb(176, 158, 57)')" style="border-radius: 50%; background-color: rgb(176, 158, 57); width: 30px; height: 30px;">&nbsp;</button>
-          </div> 
-          <div> 
-            <button (click)="updateTheme('rgb(105, 48, 88)')" style="border-radius: 50%; background-color: rgb(105, 48, 88); width: 30px; height: 30px;">&nbsp;</button>
-          </div> 
-          <div> 
-            <button (click)="updateTheme('rgb(227, 165, 57)')" style="border-radius: 50%; background-color: rgb(227, 165, 57); width: 30px; height: 30px;">&nbsp;</button>
-          </div> 
-          <div class="user">
-            <img style="scale: 0.7;" src="../../../assets/red-logo.png" alt="Logo">
-          </div>
+  <div class="container">
+    <div class="navigation">
+      <ul>
+        <li style="margin-top: 1vh">
+          <a href="/dashboard">
+            <span style="margin-top: 3px;" class="icon"
+              ><ion-icon name="tv-outline"></ion-icon
+            ></span>
+            <span class="title"><h4>Pametni Bilbord</h4></span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard">
+            <span style="margin-top: 3px;" class="icon"
+              ><ion-icon name="home-outline"></ion-icon
+            ></span>
+            <span class="title">Početna</span>
+          </a>
+        </li>
+        <li class="selected">
+          <a href="/billboards">
+            <span
+              style="color: var(--color-primary); margin-top: 3px;"
+              class="icon"
+              ><ion-icon name="albums-outline"></ion-icon
+            ></span>
+            <span style="color: var(--color-primary);" class="title"
+              >Bilbordi</span
+            >
+          </a>
+        </li>
+        <li>
+          <a href="/content">
+            <span style="margin-top: 3px;" class="icon"
+              ><ion-icon name="images-outline"></ion-icon
+            ></span>
+            <span class="title">Reklame</span>
+          </a>
+        </li>
+        <li>
+          <a href="/users">
+            <span style="margin-top: 3px;" class="icon"
+              ><ion-icon name="person-outline"></ion-icon
+            ></span>
+            <span class="title">Korisnici</span>
+          </a>
+        </li>
+        <li>
+          <a href="/messages">
+            <span style="margin-top: 3px;" class="icon"
+              ><ion-icon name="chatbox-ellipses-outline"></ion-icon
+            ></span>
+            <span class="title">Poruke</span>
+          </a>
+        </li>
+        <li style="position: absolute; top: 88vh;">
+          <a href="/login">
+            <span style="margin-top: 3px;" class="icon"
+              ><ion-icon name="log-out-outline"></ion-icon
+            ></span>
+            <span class="title">Odjavi se</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="main">
+      <div class="topbar">
+        <div (click)="showSidebar()" class="toggle">
+          <ion-icon name="menu-outline"></ion-icon>
         </div>
-    
-        <div style="grid-template-columns: 1fr;" class="details">
-          <div class="recentOrders">
-            <div class="cardHeader">
-              <h2>Bilbordi</h2>
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <td>Klijent</td>
-                  <td>Bilbord</td>
-                  <td>Reklama</td>
-                  <td>Cijena</td>
-                  <td>Status</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Bilbo Bilbordić</td>
-                  <td>Delta 1</td>
-                  <td>Chipsy s Mesijem</td>
-                  <td>BAM&nbsp;384.50</td>
-                  <td><span class="status delivered">Odobreno</span></td>
-                </tr>
-                <tr>
-                  <td>Brusli Karatić</td>
-                  <td>Boska</td>
-                  <td>Novi audi onaj crni</td>
-                  <td>BAM&nbsp;731.50</td>
-                  <td><span class="status pending">Na&nbsp;čekanju</span></td>
-                </tr>
-                <tr>
-                  <td>Musolini Hitler</td>
-                  <td>Čajavec</td>
-                  <td>Moj kamp</td>
-                  <td>BAM&nbsp;1231.50</td>
-                  <td><span class="status return">Odbijeno</span></td>
-                </tr>
-                <tr>
-                    <td>Bilbo Bilbordić</td>
-                    <td>Delta 1</td>
-                    <td>Chipsy s Mesijem</td>
-                    <td>BAM&nbsp;384.50</td>
-                    <td><span class="status delivered">Odobreno</span></td>
-                  </tr>
-                  <tr>
-                    <td>Brusli Karatić</td>
-                    <td>Boska</td>
-                    <td>Novi audi onaj crni</td>
-                    <td>BAM&nbsp;731.50</td>
-                    <td><span class="status pending">Na&nbsp;čekanju</span></td>
-                  </tr>
-                  <tr>
-                    <td>Musolini Hitler</td>
-                    <td>Čajavec</td>
-                    <td>Moj kamp</td>
-                    <td>BAM&nbsp;1231.50</td>
-                    <td><span class="status return">Odbijeno</span></td>
-                  </tr>
-                  <tr>
-                    <td>Bilbo Bilbordić</td>
-                    <td>Delta 1</td>
-                    <td>Chipsy s Mesijem</td>
-                    <td>BAM&nbsp;384.50</td>
-                    <td><span class="status delivered">Odobreno</span></td>
-                  </tr>
-                  <tr>
-                    <td>Brusli Karatić</td>
-                    <td>Boska</td>
-                    <td>Novi audi onaj crni</td>
-                    <td>BAM&nbsp;731.50</td>
-                    <td><span class="status pending">Na&nbsp;čekanju</span></td>
-                  </tr>
-                  <tr>
-                    <td>Musolini Hitler</td>
-                    <td>Čajavec</td>
-                    <td>Moj kamp</td>
-                    <td>BAM&nbsp;1231.50</td>
-                    <td><span class="status return">Odbijeno</span></td>
-                  </tr>
-                  <tr>
-                    <td>Bilbo Bilbordić</td>
-                    <td>Delta 1</td>
-                    <td>Chipsy s Mesijem</td>
-                    <td>BAM&nbsp;384.50</td>
-                    <td><span class="status delivered">Odobreno</span></td>
-                  </tr>
-                  <tr>
-                    <td>Brusli Karatić</td>
-                    <td>Boska</td>
-                    <td>Novi audi onaj crni</td>
-                    <td>BAM&nbsp;731.50</td>
-                    <td><span class="status pending">Na&nbsp;čekanju</span></td>
-                  </tr>
-                  <tr>
-                    <td>Musolini Hitler</td>
-                    <td>Čajavec</td>
-                    <td>Moj kamp</td>
-                    <td>BAM&nbsp;1231.50</td>
-                    <td><span class="status return">Odbijeno</span></td>
-                  </tr>
-                <tr>
-                  <td>Saša Kovačević</td>
-                  <td>Boska 2</td>
-                  <td>Leto je vrelo je</td>
-                  <td>BAM&nbsp;621.50</td>
-                  <td><span class="status inprogress">Obrađuje&nbsp;se</span></td>
-                </tr>
-                <tr>
-                  <td>Miloš Biković</td>
-                  <td>ETF</td>
-                  <td>Montevideo</td>
-                  <td>BAM&nbsp;5121.50</td>
-                  <td><span class="status delivered">Odobreno</span></td>
-                </tr>
-                <tr>
-                  <td>Joka Nikolić</td>
-                  <td>Stanica</td>
-                  <td>NBA Finale</td>
-                  <td>BAM&nbsp;561.30</td>
-                  <td><span class="status inprogress">Obrađuje&nbsp;se</span></td>
-                </tr>
-                <tr>
-                  <td>Nemanja Bjelica</td>
-                  <td>Lesnina</td>
-                  <td>Rođendan</td>
-                  <td>BAM&nbsp;71.30</td>
-                  <td><span class="status return">Odbijeno</span></td>
-                </tr>
-                <tr>
-                  <td>Marin Marinović</td>
-                  <td>Centar</td>
-                  <td>Smoki</td>
-                  <td>BAM&nbsp;751.30</td>
-                  <td><span class="status delivered">Odobreno</span></td>
-                </tr>
-              </tbody>
-            </table>
+        <div>
+          <button
+            (click)="updateTheme('rgb(149, 81, 81)')"
+            style="border-radius: 50%; background-color: rgb(149, 81, 81); width: 30px; height: 30px;"
+          >
+            &nbsp;
+          </button>
+        </div>
+        <div>
+          <button
+            (click)="updateTheme('rgb(61, 59, 122)')"
+            style="border-radius: 50%; background-color: rgb(61, 59, 122); width: 30px; height: 30px;"
+          >
+            &nbsp;
+          </button>
+        </div>
+        <div>
+          <button
+            (click)="updateTheme('rgb(15, 113, 48)')"
+            style="border-radius: 50%; background-color: rgb(15, 113, 48); width: 30px; height: 30px;"
+          >
+            &nbsp;
+          </button>
+        </div>
+        <div>
+          <button
+            (click)="updateTheme('rgb(176, 158, 57)')"
+            style="border-radius: 50%; background-color: rgb(176, 158, 57); width: 30px; height: 30px;"
+          >
+            &nbsp;
+          </button>
+        </div>
+        <div>
+          <button
+            (click)="updateTheme('rgb(105, 48, 88)')"
+            style="border-radius: 50%; background-color: rgb(105, 48, 88); width: 30px; height: 30px;"
+          >
+            &nbsp;
+          </button>
+        </div>
+        <div>
+          <button
+            (click)="updateTheme('rgb(227, 165, 57)')"
+            style="border-radius: 50%; background-color: rgb(227, 165, 57); width: 30px; height: 30px;"
+          >
+            &nbsp;
+          </button>
+        </div>
+        <div class="user">
+          <img
+            style="scale: 0.7;"
+            src="../../../assets/red-logo.png"
+            alt="Logo"
+          />
+        </div>
+      </div>
+
+      <div style="grid-template-columns: 1fr;" class="details">
+        <div class="recentOrders">
+          <div class="cardHeader">
+            <h2>
+              Bilbordi&nbsp;&nbsp;&nbsp;<ion-icon
+                (click)="showModal()"
+                style="position: relative; top: 4px;"
+                name="add-circle-outline"
+                class="clicable"
+              ></ion-icon>
+            </h2>
           </div>
+
+          <div id="newBillboardModal" class="modal">
+            <div class="modal-content" *ngIf="newBillboard">
+              <div style="grid-template-columns: 1fr;" class="centered details">
+                <div class="recentOrders">
+                  <div style="padding-right: 15px; padding-left: 15px; padding-top: 10px; padding-bottom: 10px;">
+                  <div class="cardHeader" style="padding: 15px;">
+                    <h4>DODAVANJE&nbsp;BILBORDA</h4>
+                  </div>
+                  <div class="cardHeader">
+                    <div class="login-container">
+                      <input type="text" placeholder="Ime" required [(ngModel)]="newBillboard.name" [ngModelOptions]="{standalone: true}"/>
+                      <input type="text" placeholder="Grad" required [(ngModel)]="newBillboard.city" [ngModelOptions]="{standalone: true}"/>
+                      <input type="text" placeholder="Cijena&nbsp;po&nbsp;danu" required [(ngModel)]="newBillboard.dailyRate" [ngModelOptions]="{standalone: true}" />
+                      <div class="separator"></div>
+                      <input (click)="addBillboard(newBillboard)" type="submit" value="Kreiraj&nbsp;billbord" />
+                      <input (click)="closeModal()" type="button" value="Zatvori" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="mapsModal" class="modal">
+            <div class="modal-content" *ngIf="newBillboard">
+              <div style="grid-template-columns: 1fr;" class="centered details">
+                <div class="recentOrders">
+                  <div style="padding-right: 15px; padding-left: 15px; padding-top: 10px; padding-bottom: 10px;">
+                  <div class="cardHeader" style="padding: 15px;">
+                    <h4>LOKACIJA&nbsp;BILBORDA</h4>
+                  </div>
+                  <div class="cardHeader">
+                    <div class="login-container">
+                      <agm-map [latitude]="lat" [longitude]="lng" > 
+                        <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="placeMarker($event)"></agm-marker>
+                      </agm-map>
+                      <div class="separator"></div>
+                      <input (click)="updateBillboardLocation(currentlyEditedBillboardsLocation)" type="submit" value="Ažuriraj&nbsp;lokaciju" />
+                      <input (click)="closeMapsModal()" type="button" value="Zatvori" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="editBillboardModal" class="modal">
+            <div class="modal-content" *ngIf="currentlyEditedBillboard">
+              <div style="grid-template-columns: 1fr;" class="centered details">
+                <div class="recentOrders">
+                  <div style="padding-right: 15px; padding-left: 15px; padding-top: 10px; padding-bottom: 10px;">
+                  <div class="cardHeader" style="padding: 15px;">
+                    <h4>IZMJENA&nbsp;BILBORDA</h4>
+                  </div>
+                  <div class="cardHeader">
+                    <div class="login-container">
+                      <input type="text" placeholder="Ime" required [(ngModel)]="currentlyEditedBillboard.name" [ngModelOptions]="{standalone: true}"/>
+                      <input type="text" placeholder="Grad" required [(ngModel)]="currentlyEditedBillboard.city" [ngModelOptions]="{standalone: true}"/>
+                      <input type="text" placeholder="Cijena&nbsp;po&nbsp;danu" required [(ngModel)]="currentlyEditedBillboard.dailyRate" [ngModelOptions]="{standalone: true}" />
+                      <div class="separator"></div>
+                      <input (click)="updateBillboard(this.currentlyEditedBillboard)" type="submit" value="Sačuvaj izmjene" />
+                      <input (click)="closeEditModal()" type="button" value="Zatvori" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          <table style="border-collapse: separate;">
+            <thead>
+              <tr>
+                <td style="text-align: center; float: left;">
+                  Naziv
+                </td>
+                <td style="text-align: left;">Grad</td>
+                <td style="text-align: left;">Cijena/dan</td>
+                <td>&nbsp;</td>
+              </tr>
+            </thead>
+            <tbody *ngFor="let billboard of billboards">
+              <tr style="border: 5px solid black; border-radius: 10px;">
+                <td style="text-align: left;">{{ billboard.name }}</td>
+                <td style="text-align: left;">{{ billboard.city }}</td>
+                <td style="text-align: left;">{{ billboard.dailyRate!.toFixed(2) }}&nbsp;BAM</td>
+                <td style="text-align: left;">
+                  <span
+                    (click)="toggleStatus(billboard)"
+                    [ngClass]="{'status': true, 'clicable': true, 'return': billboard.available != true, 'delivered': billboard.available  }"
+                  >
+                    <div
+                      *ngIf="!billboard.available; then thenBlock else elseBlock"
+                    ></div>
+                    <ng-template #thenBlock>Nedostupan</ng-template>
+                    <ng-template #elseBlock>Dostupan</ng-template>
+                  </span>
+                </td>
+                <td style="float: right">
+                  <span style="display: flex; flex-direction: row;">
+                    <span
+                      (click)="startEditingBillboardLocation(billboard)"
+                      class="status return clicable"
+                      style="background-color: #7d7d7d"
+                      >Vidi&nbsp;na&nbsp;mapi</span
+                    >&nbsp;&nbsp;
+                    <span
+                      (click)="startEditingBillboard(billboard)"
+                      class="status return clicable"
+                      style="background-color: #7d7d7d"
+                      >Izmijeni</span
+                    >&nbsp;&nbsp;
+                    <span
+                      (click)="deleteBillboard(billboard)"
+                      class="status return clicable"
+                      style="background-color: #7d7d7d"
+                      >Obriši</span
+                    >
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    </div>
+  </div>
+</div>

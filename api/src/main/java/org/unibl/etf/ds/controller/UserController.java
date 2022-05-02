@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.ds.model.dto.AdminUserDto;
-import org.unibl.etf.ds.model.dto.UserIdDto;
+import org.unibl.etf.ds.model.dto.IdDto;
 import org.unibl.etf.ds.service.UserService;
 
 import java.util.List;
@@ -23,19 +23,26 @@ public class UserController {
         return new ResponseEntity<List<AdminUserDto>>(userService.getAll(), HttpStatus.OK);
     }
 
+    // POST /users -> Done in registration.
+
+    @PutMapping
+    public void updatedUser(@RequestBody @Validated AdminUserDto adminUserDto) {
+        userService.update(adminUserDto);
+    }
+
     @PostMapping("/reset")
-    public void resetPassword(@RequestBody @Validated UserIdDto userIdDto) {
-        userService.resetPassword(userIdDto);
+    public void resetPassword(@RequestBody @Validated IdDto idDto) {
+        userService.resetPassword(idDto);
     }
 
     @PostMapping("/toggle")
-    public void toggleStatus(@RequestBody @Validated UserIdDto userIdDto) {
-        userService.toggleStatus(userIdDto);
+    public void toggleStatus(@RequestBody @Validated IdDto idDto) {
+        userService.toggleStatus(idDto);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<AdminUserDto> delete(@PathVariable Integer id) {
-        UserIdDto userIdDto = new UserIdDto(id);
-        return new ResponseEntity<AdminUserDto>(userService.deleteById(userIdDto), HttpStatus.OK);
+        IdDto idDto = new IdDto(id);
+        return new ResponseEntity<AdminUserDto>(userService.deleteById(idDto), HttpStatus.OK);
     }
 }

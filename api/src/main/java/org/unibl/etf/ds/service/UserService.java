@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.ds.exception.HttpException;
 import org.unibl.etf.ds.model.dto.AdminUserDto;
-import org.unibl.etf.ds.model.dto.UserIdDto;
+import org.unibl.etf.ds.model.dto.IdDto;
 import org.unibl.etf.ds.model.entity.UserEntity;
 import org.unibl.etf.ds.repository.UserRepository;
 
@@ -36,23 +36,31 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public AdminUserDto deleteById(UserIdDto userIdDto) {
-        UserEntity userEntity = getById(userIdDto.getId());
+    public AdminUserDto deleteById(IdDto idDto) {
+        UserEntity userEntity = getById(idDto.getId());
         if (userEntity == null) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
         }
-        userEntity.setDeleted(true);
-        userRepository.saveAndFlush(userEntity);
+        userRepository.delete(userEntity);
         return modelMapper.map(userEntity, AdminUserDto.class);
     }
 
     public AdminUserDto update(AdminUserDto adminUserDto) {
-        UserEntity updatedUserEntity = userRepository.saveAndFlush(modelMapper.map(adminUserDto, UserEntity.class));
+
+        UserEntity userEntity = getById(adminUserDto.getId());
+        if (userEntity == null) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+        }
+
+        userEntity.setUsername(adminUserDto.getUsername());
+        userEntity.setEmail(adminUserDto.getEmail());
+
+        UserEntity updatedUserEntity = userRepository.saveAndFlush(userEntity);
         return modelMapper.map(updatedUserEntity, AdminUserDto.class);
     }
 
-    public void resetPassword(UserIdDto userIdDto) {
-        UserEntity userEntity = getById(userIdDto.getId());
+    public void resetPassword(IdDto idDto) {
+        UserEntity userEntity = getById(idDto.getId());
         if (userEntity == null) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
         }
@@ -67,15 +75,15 @@ public class UserService {
         asyncMailService.sendSimpleMailAsync(updatedUserEntity.getEmail(), messageContent);
     }
 
-    public void toggleStatus(UserIdDto userIdDto) {
-        UserEntity userEntity = getById(userIdDto.getId());
+    public void toggleStatus(IdDto idDto) {
+        UserEntity userEntity = getById(idDto.getId());
         if (userEntity == null) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
         }
 
-        userEntity.setDeleted(!userEntity.getDeleted());
+        userEntity.setDisabled(!userEntity.getDisabled());
         UserEntity updatedUserEntity = userRepository.saveAndFlush(userEntity);
-        if (updatedUserEntity.getDeleted()) {
+        if (updatedUserEntity.getDisabled()) {
             String messageContent = "Account " + updatedUserEntity.getUsername() + " has been disabled." +
                                     "\n" +
                                     "Contact administrator via contact form for more information.";
