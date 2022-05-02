@@ -49,7 +49,7 @@ function Login() {
   return (
     <Layout>
     <Container>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "30%"}}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "25%"}}>
             <img
                 src={Logo}
                 draggable={"false"}
@@ -63,7 +63,7 @@ function Login() {
       <TextField id="outlined-basic" label="Korisničko ime" variant="outlined" style={{ marginTop: "30%" }} onChange={e => setUsername(e.target.value)} />
       <TextField type="password" id="outlined-basic" label="Lozinka" variant="outlined" style={{ marginTop: "25px" }} onChange={e => setPassword(e.target.value)} />
       <hr></hr>
-      <a href="mailto:">Zaboravljena lozinka</a>
+      <a href="mailto:njegos.dukic.998@gmail.com?subject=Smart Bilboard - Zaboravljena lozinka&body=Molim Vas da resetujete administratorsku lozinku za nalog povezan sa ovim mejlom.">Zaboravljena lozinka</a>
       <Button onClick={handleLogin} variant="contained" style={{ marginTop: "25px" }}>Prijavi se</Button>
       <Button onClick={() => navigate('/register')} variant="outlined" style={{ marginTop: "25px" }}>Registruj se</Button>
 
