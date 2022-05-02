@@ -1,6 +1,7 @@
 package org.unibl.etf.ds.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.ds.model.dto.BillboardDto;
 import org.unibl.etf.ds.model.entity.BillboardEntity;
@@ -21,7 +22,7 @@ public class BillboardController {
     }
 
     @PostMapping
-    public BillboardEntity addNew(@RequestBody BillboardDto billboardDto) {
+    public BillboardEntity addNew(@RequestBody @Validated BillboardDto billboardDto) {
         return billboardService.createNew(billboardDto);
     }
 
@@ -31,7 +32,7 @@ public class BillboardController {
     }
 
     @PutMapping
-    public BillboardEntity update(@RequestBody BillboardDto billboardDto) {
+    public BillboardEntity update(@RequestBody @Validated BillboardDto billboardDto) {
         return billboardService.update(billboardDto);
     }
 

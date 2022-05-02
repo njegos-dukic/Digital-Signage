@@ -1,6 +1,7 @@
 package org.unibl.etf.ds.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.ds.model.dto.FeedbackDto;
 import org.unibl.etf.ds.model.dto.NewFeedbackDto;
@@ -22,7 +23,7 @@ public class FeedbackController {
     }
 
     @PostMapping
-    public FeedbackEntity insert(@RequestBody NewFeedbackDto newFeedbackDto) {
+    public FeedbackEntity insert(@RequestBody @Validated NewFeedbackDto newFeedbackDto) {
         return feedbackService.addNew(newFeedbackDto);
     }
 

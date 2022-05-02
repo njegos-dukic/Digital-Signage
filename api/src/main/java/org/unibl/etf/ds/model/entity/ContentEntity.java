@@ -25,10 +25,10 @@ public class ContentEntity {
     private BillboardEntity billboard;
 
     @Column(name = "deleted", nullable = false)
-    private Integer deleted;
+    private Boolean deleted;
 
     @Column(name = "approved", nullable = false)
-    private Integer approved;
+    private Boolean approved;
 
     @Column(name = "start_date", nullable = false)
     private Instant startDate;

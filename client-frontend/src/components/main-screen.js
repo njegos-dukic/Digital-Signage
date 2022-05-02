@@ -21,6 +21,8 @@ toast.configure();
 
 function MainScreen() {
   const [image, setImage] = useState(null);
+  const [imageMultipart, setImageMultipart] = useState(null);
+
   const [isUploaded, setIsUploaded] = useState(false);
   const [fileName, setFileName] = useState("");
   const [typeFile, setTypeFile] = useState("");
@@ -72,6 +74,9 @@ function MainScreen() {
     if (e.target.files && e.target.files[0]) {
       setTypeFile(e.target.files[0].type);
       setFileName(e.target.files[0].name);
+      // New part
+      setImageMultipart(e.target.files[0]);
+
       let reader = new FileReader();
 
       reader.onload = function (e) {
@@ -83,8 +88,33 @@ function MainScreen() {
     }
   }
 
+
+  function handleSubmit() {
+    const FormData = require('form-data');
+
+    const formData = new FormData();
+    formData.append('billboardId', selectedBillboard.id);
+    formData.append('startDate', dateRange[0].toISOString());
+    formData.append('endDate', dateRange[1].toISOString());
+    formData.append('userId', JSON.parse(localStorage.getItem("user")).id);
+    formData.append('content', imageMultipart);
+
+    const config = {
+      headers: {
+          'content-type': 'multipart/form-data'
+      }
+  }
+
+    axios.post("https://localhost:9000/api/v1/content", formData, config)
+         .then(res => {
+            toast.success("Uspješno poslata reklama.",  { position: toast.POSITION.BOTTOM_RIGHT, theme: "colored"} );
+            console.log(res.data);
+          },
+          err => toast.error(err.response.data, {position: toast.POSITION.BOTTOM_RIGHT, theme: "colored"})
+        );
+  }
+
   return (
-  
     <Layout>
       <Container>
         <BoxUpload>
@@ -186,10 +216,12 @@ function MainScreen() {
             inputFormat="dd.MM.yyyy"
             value={dateRange}
             onChange={(newRange) => {
+              console.log(newRange);
+
               setDateRange(newRange);
 
               if (newRange[0] && newRange[1])
-                setNumberOfDays((newRange[1].getTime() - newRange[0].getTime()) / (1000 * 3600 * 24))
+                setNumberOfDays((newRange[1].getTime() - newRange[0].getTime()) / (1000 * 3600 * 24) + 1);
             }}
             renderInput={(startProps, endProps) => (
               <React.Fragment>
@@ -214,7 +246,7 @@ function MainScreen() {
         {
           !isNaN(selectedBillboard.dailyRate * numberOfDays) && isUploaded &&
           <>
-            <Button variant="contained" style={{ width: "18.5%", position: "absolute", top: 350 }}>Pošalji</Button>
+            <Button onClick={handleSubmit} variant="contained" style={{ width: "18.5%", position: "absolute", top: 350 }}>Pošalji</Button>
           </>
         }
       </Container>
