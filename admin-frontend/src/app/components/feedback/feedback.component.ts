@@ -15,6 +15,8 @@ export class FeedbackComponent implements OnInit {
   constructor(private messageService: MessagesService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem("color"))
+      this.updateTheme(JSON.parse(localStorage.getItem("color") || ''));
     this.messageService.getAll().subscribe({
       next: (mes) => this.messages = mes,
       error: (e) => this.toastr.error("Can't get messages from the server.", "Error")
@@ -29,6 +31,10 @@ export class FeedbackComponent implements OnInit {
   }
 
   updateTheme(color: string) {
+    if(color == '')
+      return;
+
+    localStorage.setItem("color", JSON.stringify(color));
     let r: any = document.querySelector(':root');
     r.style.setProperty('--color-primary', color);
   }

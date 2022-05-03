@@ -21,6 +21,9 @@ export class BillboardsComponent implements OnInit {
   constructor(private toastr: ToastrService, private billboardService: BillboardService) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem("color"))
+      this.updateTheme(JSON.parse(localStorage.getItem("color") || ''));
+      
     this.billboardService.getAll().subscribe({
       next: res => this.billboards = res,
       error: () =>  this.toastr.error("Error gettings billboards from the database.", 'Error')
@@ -53,6 +56,10 @@ export class BillboardsComponent implements OnInit {
   }
 
   updateTheme(color: string) {
+    if(color == '')
+      return;
+
+    localStorage.setItem("color", JSON.stringify(color));
     let r: any = document.querySelector(':root');
     r.style.setProperty('--color-primary', color);
   }

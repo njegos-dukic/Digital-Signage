@@ -18,4 +18,6 @@ public class AdminUserDto {
     private String email;
     @NotNull
     private Boolean disabled;
+    @NotNull
+    private Boolean isAdmin;
 }

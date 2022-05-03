@@ -52,7 +52,7 @@ function MainScreen() {
    }, []);
 
   useEffect(() => 
-    axios.get("https://localhost:9000/api/v1/billboard")
+    axios.get("https://localhost:9000/api/v1/billboard/available")
          .then(res => {
             setBillboards(res.data);
           }), []);
@@ -88,12 +88,12 @@ function MainScreen() {
     }
   }
 
-
   function handleSubmit() {
     const FormData = require('form-data');
 
     const formData = new FormData();
     formData.append('billboardId', selectedBillboard.id);
+    formData.append('adName', fileName);
     formData.append('startDate', dateRange[0].toISOString());
     formData.append('endDate', dateRange[1].toISOString());
     formData.append('userId', JSON.parse(localStorage.getItem("user")).id);

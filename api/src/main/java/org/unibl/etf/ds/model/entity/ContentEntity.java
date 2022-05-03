@@ -24,6 +24,9 @@ public class ContentEntity {
     @JoinColumn(name = "billboard_id", nullable = false)
     private BillboardEntity billboard;
 
+    @Column(name = "ad_name", nullable = false, length = 1024)
+    private String adName;
+
     @Column(name = "deleted", nullable = false)
     private Boolean deleted;
 

@@ -1,0 +1,242 @@
+<div class="body">
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li style="margin-top: 1vh">
+            <a href="/dashboard">
+              <span style="margin-top: 3px;" class="icon"
+                ><ion-icon name="tv-outline"></ion-icon
+              ></span>
+              <span class="title"><h4>Pametni Bilbord</h4></span>
+            </a>
+          </li>
+          <li>
+            <a href="/dashboard">
+              <span style="margin-top: 3px;" class="icon"
+                ><ion-icon name="home-outline"></ion-icon
+              ></span>
+              <span class="title">Početna</span>
+            </a>
+          </li>
+          <li>
+            <a href="/billboards">
+              <span style="margin-top: 3px;" class="icon"
+                ><ion-icon name="person-outline"></ion-icon
+              ></span>
+              <span class="title">Bilbordi</span>
+            </a>
+          </li>
+          <li class="selected">
+            <a href="/content">
+              <span
+                style="color: var(--color-primary); margin-top: 3px;"
+                class="icon"
+                ><ion-icon name="albums-outline"></ion-icon
+              ></span>
+              <span style="color: var(--color-primary);" class="title"
+                >Reklame</span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="/users">
+              <span style="margin-top: 3px;" class="icon"
+                ><ion-icon name="images-outline"></ion-icon
+              ></span>
+              <span class="title">Korisnici</span>
+            </a>
+          </li>
+          <li>
+            <a href="/messages">
+              <span style="margin-top: 3px;" class="icon"
+                ><ion-icon name="chatbox-ellipses-outline"></ion-icon
+              ></span>
+              <span class="title">Poruke</span>
+            </a>
+          </li>
+          <li style="position: absolute; top: 88vh;">
+            <a href="/login">
+              <span style="margin-top: 3px;" class="icon"
+                ><ion-icon name="log-out-outline"></ion-icon
+              ></span>
+              <span class="title">Odjavi se</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+  
+      <div class="main">
+        <div class="topbar">
+          <div (click)="showSidebar()" class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+          </div>
+          <div>
+            <button
+              (click)="updateTheme('rgb(149, 81, 81)')"
+              style="border-radius: 50%; background-color: rgb(149, 81, 81); width: 30px; height: 30px;"
+            >
+              &nbsp;
+            </button>
+          </div>
+          <div>
+            <button
+              (click)="updateTheme('rgb(61, 59, 122)')"
+              style="border-radius: 50%; background-color: rgb(61, 59, 122); width: 30px; height: 30px;"
+            >
+              &nbsp;
+            </button>
+          </div>
+          <div>
+            <button
+              (click)="updateTheme('rgb(15, 113, 48)')"
+              style="border-radius: 50%; background-color: rgb(15, 113, 48); width: 30px; height: 30px;"
+            >
+              &nbsp;
+            </button>
+          </div>
+          <div>
+            <button
+              (click)="updateTheme('rgb(176, 158, 57)')"
+              style="border-radius: 50%; background-color: rgb(176, 158, 57); width: 30px; height: 30px;"
+            >
+              &nbsp;
+            </button>
+          </div>
+          <div>
+            <button
+              (click)="updateTheme('rgb(105, 48, 88)')"
+              style="border-radius: 50%; background-color: rgb(105, 48, 88); width: 30px; height: 30px;"
+            >
+              &nbsp;
+            </button>
+          </div>
+          <div>
+            <button
+              (click)="updateTheme('rgb(227, 165, 57)')"
+              style="border-radius: 50%; background-color: rgb(227, 165, 57); width: 30px; height: 30px;"
+            >
+              &nbsp;
+            </button>
+          </div>
+          <div class="user">
+            <img
+              style="scale: 0.7;"
+              src="../../../assets/red-logo.png"
+              alt="Logo"
+            />
+          </div>
+        </div>
+  
+        <div style="grid-template-columns: 1fr;" class="details">
+          <div class="recentOrders">
+            <div class="cardHeader">
+              <h2>
+                Korisnici&nbsp;&nbsp;&nbsp;<ion-icon
+                  style="position: relative; top: 4px;"
+                  name="add-circle-outline"
+                  class="clicable"
+                ></ion-icon>
+              </h2>
+            </div>
+  
+            <!-- <div id="newUserModal" class="modal">
+              <div class="modal-content" *ngIf="newUser">
+                <div style="grid-template-columns: 1fr;" class="centered details">
+                  <div class="recentOrders">
+                    <div style="padding-right: 15px; padding-left: 15px; padding-top: 10px; padding-bottom: 10px;">
+                    <div class="cardHeader" style="padding: 15px;">
+                      <h4>DODAVANJE&nbsp;KORISNIKA</h4>
+                    </div>
+                    <div class="cardHeader">
+                      <div class="login-container">
+                        <input type="text" placeholder="Korisničko ime" required [(ngModel)]="newUser.username" [ngModelOptions]="{standalone: true}"/>
+                        <input type="text" placeholder="Lozinka" required [(ngModel)]="newUser.password" [ngModelOptions]="{standalone: true}"/>
+                        <input type="text" placeholder="Email" required [(ngModel)]="newUser.email" [ngModelOptions]="{standalone: true}" />
+                        <div class="separator"></div>
+                        <input (click)="addUser(newUser)" type="submit" value="Kreiraj&nbsp;korisnika" />
+                        <input (click)="closeModal()" type="button" value="Zatvori" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div> -->
+  
+            <!-- <div id="editUserModal" class="modal">
+              <div class="modal-content" *ngIf="currentlyEditedUser">
+                <div style="grid-template-columns: 1fr;" class="centered details">
+                  <div class="recentOrders">
+                    <div style="padding-right: 15px; padding-left: 15px; padding-top: 10px; padding-bottom: 10px;">
+                    <div class="cardHeader" style="padding: 15px;">
+                      <h4>IZMJENA&nbsp;KORISNIKA</h4>
+                    </div>
+                    <div class="cardHeader">
+                      <div class="login-container">
+                        <input type="text" placeholder="Korisničko ime" required [(ngModel)]="currentlyEditedUser.username" [ngModelOptions]="{standalone: true}" />
+                        <input type="text" placeholder="Email" required [(ngModel)]="currentlyEditedUser.email" [ngModelOptions]="{standalone: true}"/>
+                        <div class="separator"></div>
+                        <input (click)="updateUser(this.currentlyEditedUser)" type="submit" value="Sačuvaj&nbsp;izmjene" />
+                        <input (click)="closeEditModal()" type="button" value="Zatvori" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div> -->
+  
+            <table style="border-collapse: separate;">
+              <thead>
+                <tr>
+                  <td style="text-align: center; float: left;">
+                    Naziv&nbsp;reklame
+                  </td>
+                  <td style="text-align: left;">Bilbord</td>
+                  <td style="text-align: left;">Korisnik</td>
+                  <td style="text-align: left;">Početak</td>
+                  <td style="text-align: left;">Kraj</td>
+                  <td style="text-align: left;">Cijena</td>
+                  <td style="text-align: left;">Status</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </thead>
+              <tbody *ngFor="let ad of ads">
+                <tr style="border: 5px solid black; border-radius: 10px;">
+                  <td style="text-align: left; white-space: pre-wrap;">{{ ad.adName }}</td>
+                  <td style="text-align: left;">{{ ad.billboard.name }}</td>
+                  <td style="text-align: left;">{{ ad.user.username }}</td>
+                  <td style="text-align: left;">{{ ad.startDate.toLocaleDateString('sr-Latn-RS') }}</td>
+                  <td style="text-align: left;">{{ ad.endDate.toLocaleDateString('sr-Latn-RS') }}</td>
+                  <td style="text-align: left;">{{ ad.totalCost.toFixed(2) + " BAM" }}</td>
+                  <td style="text-align: left;">
+                    <span
+                      (click)="toggleStatus(ad)"
+                      [ngClass]="{'status': true, 'clicable': true, 'pending': !ad.approved == true, 'delivered': ad.approved  }"
+                    >
+                      <div
+                        *ngIf="ad.approved; then thenBlock else elseBlock"
+                      ></div>
+                      <ng-template #thenBlock>Odobren</ng-template>
+                      <ng-template #elseBlock>Na&nbsp;čekanju</ng-template>
+                    </span>
+                  </td>
+                  <td style="float: right">
+                    <span style="display: flex; flex-direction: row;">
+                      <span
+                        (click)="deleteAd(ad)"
+                        class="status return clicable"
+                        style="background-color: #7d7d7d"
+                        >Obriši</span
+                      >
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -22,6 +22,10 @@ public class BillboardService {
         return billboardRepository.findAllByDeleted(false);
     }
 
+    public List<BillboardEntity> getAllAvailable() {
+        return billboardRepository.findAllByDeletedAndAvailable(false, true);
+    }
+
     public BillboardEntity createNew(BillboardDto billboardDto) {
         billboardDto.setId(0);
         billboardDto.setLat(44.772);

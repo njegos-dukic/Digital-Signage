@@ -92,6 +92,20 @@ public class UserService {
         }
     }
 
+    public void toggleAdmin(IdDto idDto) {
+        UserEntity userEntity = getById(idDto.getId());
+        if (userEntity == null) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+        }
+
+        userEntity.setIsAdmin(!userEntity.getIsAdmin());
+        UserEntity updatedUserEntity = userRepository.saveAndFlush(userEntity);
+        if (updatedUserEntity.getIsAdmin()) {
+            String messageContent = "Account " + updatedUserEntity.getUsername() + " is now administrator.";
+            asyncMailService.sendSimpleMailAsync(updatedUserEntity.getEmail(), messageContent);
+        }
+    }
+
     private String generateRandomAlphaNumericString(Integer length) {
         int leftLimit = '0';
         int rightLimit = 'z';

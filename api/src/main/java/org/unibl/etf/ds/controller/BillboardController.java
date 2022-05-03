@@ -21,6 +21,11 @@ public class BillboardController {
         return billboardService.getAll();
     }
 
+    @GetMapping("/available")
+    public List<BillboardEntity> getAllAvailable() {
+        return billboardService.getAllAvailable();
+    }
+
     @PostMapping
     public BillboardEntity addNew(@RequestBody @Validated BillboardDto billboardDto) {
         return billboardService.createNew(billboardDto);

@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { AgmCoreModule } from '@agm/core';
+import { ContentComponent } from './components/content/content.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AgmCoreModule } from '@agm/core';
     BillboardsComponent,
     LoginComponent,
     UsersComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    ContentComponent
   ],
   imports: [
     BrowserModule,

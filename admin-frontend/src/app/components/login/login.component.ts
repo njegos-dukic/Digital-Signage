@@ -16,7 +16,9 @@ export class LoginComponent implements OnInit {
   credentials: LoginDto = { username: "", password: "" };
 
   ngOnInit(): void {
-    localStorage.clear();
+    if (localStorage.getItem("color"))
+      this.updateTheme(JSON.parse(localStorage.getItem("color") || ''));
+    localStorage.removeItem("user");
   }
 
   showSidebar() {
@@ -27,6 +29,10 @@ export class LoginComponent implements OnInit {
   }
 
   updateTheme(color: string) {
+    if(color == '')
+      return;
+
+    localStorage.setItem("color", JSON.stringify(color));
     let r: any = document.querySelector(':root');
     r.style.setProperty('--color-primary', color);
   }

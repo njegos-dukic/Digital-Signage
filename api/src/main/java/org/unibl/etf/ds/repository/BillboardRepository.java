@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface BillboardRepository extends JpaRepository<BillboardEntity, Integer> {
 
-    public List<BillboardEntity> findAllByDeleted(Boolean deleted);
+    List<BillboardEntity> findAllByDeleted(Boolean deleted);
+    List<BillboardEntity> findAllByDeletedAndAvailable(Boolean deleted, Boolean available);
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BillboardsComponent } from './components/billboards/billboards.component';
+import { ContentComponent } from './components/content/content.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { LoginComponent } from './components/login/login.component';
@@ -36,15 +37,14 @@ const routes: Routes = [
     component: FeedbackComponent,
     canActivate: [AuthGuard]
   },
-  // TODO: Us two.
   {
     path: 'content',
-    component: DashboardComponent,
+    component: ContentComponent,
     canActivate: [AuthGuard]
   },
   {
     path: 'logout',
-    component: DashboardComponent,
+    component: LoginComponent,
     canActivate: [AuthGuard]
   },
   {

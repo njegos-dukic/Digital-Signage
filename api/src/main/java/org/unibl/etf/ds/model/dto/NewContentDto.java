@@ -4,7 +4,6 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
 
 @Data
 public class NewContentDto {
@@ -14,6 +13,9 @@ public class NewContentDto {
 
     @NotNull(message = "Billboard cannot be null.")
     private Integer billboardId;
+
+    @NotNull(message = "Name date cannot be null.")
+    private String adName;
 
     @NotNull(message = "Start date cannot be null.")
     private String startDate;

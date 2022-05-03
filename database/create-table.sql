@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `digital-signage`.`content` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `billboard_id` INT NOT NULL,
+  `ad_name` VARCHAR(1024) NOT NULL,
   `deleted` TINYINT NOT NULL,
   `approved` TINYINT NOT NULL,
   `start_date` DATETIME NOT NULL,

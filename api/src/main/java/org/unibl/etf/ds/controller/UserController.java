@@ -40,6 +40,11 @@ public class UserController {
         userService.toggleStatus(idDto);
     }
 
+    @PostMapping("/toggle-admin")
+    public void toggleAdmin(@RequestBody @Validated IdDto idDto) {
+        userService.toggleAdmin(idDto);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<AdminUserDto> delete(@PathVariable Integer id) {
         IdDto idDto = new IdDto(id);

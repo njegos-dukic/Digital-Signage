@@ -34,6 +34,11 @@ export class UserService {
     return this.httpClient.post<void>(url, userId);
   }
 
+  toggleAdmin(userId: UserId): Observable<void> {
+    let url = this.urlBase + "/toggle-admin"
+    return this.httpClient.post<void>(url, userId);
+  }
+
   resetPassword(userId: UserId): Observable<void> {
     let url = this.urlBase + "/reset"
     return this.httpClient.post<void>(url, userId);

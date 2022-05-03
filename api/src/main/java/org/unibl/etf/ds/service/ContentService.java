@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -26,6 +27,10 @@ public class ContentService {
     private final AsyncMailService asyncMailService;
     private final UserRepository userRepository;
     private final BillboardRepository billboardRepository;
+
+    public List<ContentEntity> getAllAvailable() {
+        return contentRepository.getAllByDeleted(false);
+    }
 
     public ContentEntity addNew(NewContentDto newContentDto) {
 
@@ -58,6 +63,7 @@ public class ContentService {
 
         contentEntity.setUser(userEntity);
         contentEntity.setBillboard(billboardEntity);
+        contentEntity.setAdName(newContentDto.getAdName());
         contentEntity.setApproved(false);
         contentEntity.setDeleted(false);
         contentEntity.setStartDate(startDate);
@@ -72,6 +78,7 @@ public class ContentService {
             Files.createDirectory(Paths.get(".\\..\\digital-signage-fs\\" + inserted.getId()));
             Files.write(Paths.get(".\\..\\digital-signage-fs\\" + inserted.getId() + "\\" + newContentDto.getContent().getOriginalFilename()), fileBytes);
         } catch (IOException e) {
+            e.printStackTrace();
             contentRepository.delete(inserted);
             throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while processing request.");
         }

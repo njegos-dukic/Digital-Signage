@@ -18,6 +18,9 @@ export class UsersComponent implements OnInit {
   constructor(private userService: UserService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem("color"))
+      this.updateTheme(JSON.parse(localStorage.getItem("color") || ''));
+      
     this.userService.getUsers().subscribe({
       next: (users) => this.users = users,
       error: () => this.toastr.error("Error gettings users from the database.", 'Error')
@@ -44,6 +47,10 @@ export class UsersComponent implements OnInit {
   }
 
   updateTheme(color: string) {
+    if(color == '')
+      return;
+
+    localStorage.setItem("color", JSON.stringify(color));
     let r: any = document.querySelector(':root');
     r.style.setProperty('--color-primary', color);
   }
@@ -52,6 +59,13 @@ export class UsersComponent implements OnInit {
     this.userService.toggleStatus(user).subscribe({
       next: () => { user.disabled = !user.disabled; this.toastr.success(user.username + "'s status is updated.", 'User updated'); },
       error: () => { this.toastr.error("Error while updating " + user.username + "'s status.", 'Error'); }
+    });
+  }
+
+  toggleAdmin(user: User) {
+    this.userService.toggleAdmin(user).subscribe({
+      next: () => { user.isAdmin = !user.isAdmin; this.toastr.success(user.username + "'s admin status is updated.", 'User updated'); },
+      error: () => { this.toastr.error("Error while updating " + user.username + "'s admin status.", 'Error'); }
     });
   }
 

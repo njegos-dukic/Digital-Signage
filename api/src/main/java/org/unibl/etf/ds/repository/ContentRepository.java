@@ -4,6 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.unibl.etf.ds.model.entity.ContentEntity;
 
+import java.util.List;
+
 @Repository
 public interface ContentRepository extends JpaRepository<ContentEntity, Integer> {
+
+    List<ContentEntity> getAllByDeleted(Boolean deleted);
 }
