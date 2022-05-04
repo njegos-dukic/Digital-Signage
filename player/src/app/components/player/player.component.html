@@ -1,0 +1,15 @@
+<div *ngIf="!selected" style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <select style="width: 450px; padding: 10px;" [(ngModel)]="selectedBillboard">
+        <option *ngFor="let billboard of billboards" [value]="billboard.id">
+            {{ billboard.name }}:&nbsp;{{  billboard.city }}
+        </option>
+    </select>
+    <button (click)="handleSelected()" style="margin-top: 20px; width: auto; padding: 8px;">Izaberi billboard</button>
+</div>
+
+<div *ngIf="selected" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <video #video muted *ngIf="isVideo" (canPlay)="video.play()" autoplay controls (ended)="handleNext(true)" (loadedmetadata)="video.muted = true" [src]="src" height="100%" ></video>
+    <img *ngIf="isImage" [src]="src" height="100%" />
+    <img *ngIf="isOurs" src="../../../assets/logo.png" height="85%" alt="Promo"/>
+</div>
+

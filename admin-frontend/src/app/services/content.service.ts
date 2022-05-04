@@ -15,4 +15,14 @@ export class ContentService {
   public getAll(): Observable<ContentDto[]> {
     return this.httpClient.get<ContentDto[]>(this.baseUrl);
   }
+
+  public toggle(id: number): Observable<Boolean> {
+    let url = this.baseUrl + "/toggle/" + id;
+    return this.httpClient.post<Boolean>(url, null);
+  }
+
+  public delete(id: number): Observable<Boolean> {
+    let url = this.baseUrl + "/delete/" + id;
+    return this.httpClient.delete<Boolean>(url);
+  }
 }

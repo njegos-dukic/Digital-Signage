@@ -1,9 +1,11 @@
 package org.unibl.etf.ds.service;
 
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.ds.exception.HttpException;
+import org.unibl.etf.ds.model.dto.FileDto;
 import org.unibl.etf.ds.model.dto.NewContentDto;
 import org.unibl.etf.ds.model.entity.BillboardEntity;
 import org.unibl.etf.ds.model.entity.ContentEntity;
@@ -12,11 +14,16 @@ import org.unibl.etf.ds.repository.BillboardRepository;
 import org.unibl.etf.ds.repository.ContentRepository;
 import org.unibl.etf.ds.repository.UserRepository;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -75,15 +82,90 @@ public class ContentService {
         byte[] fileBytes;
         try {
             fileBytes = newContentDto.getContent().getBytes();
-            Files.createDirectory(Paths.get(".\\..\\digital-signage-fs\\" + inserted.getId()));
-            Files.write(Paths.get(".\\..\\digital-signage-fs\\" + inserted.getId() + "\\" + newContentDto.getContent().getOriginalFilename()), fileBytes);
+            Files.createDirectory(Paths.get("digital-signage-fs" + File.separator + inserted.getId()));
+            Files.write(Paths.get("digital-signage-fs" + File.separator + inserted.getId() + File.separator + newContentDto.getContent().getOriginalFilename()), fileBytes);
         } catch (IOException e) {
             e.printStackTrace();
             contentRepository.delete(inserted);
             throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while processing request.");
         }
 
-        // TODO: Send mail from here.
         return inserted;
+    }
+
+    public void toggleStatus(Integer id) {
+        ContentEntity contentEntity = contentRepository.findById(id).orElse(null);
+        if (contentEntity == null) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+        }
+
+        contentEntity.setApproved(!contentEntity.getApproved());
+        ContentEntity updatedContentEntity = contentRepository.saveAndFlush(contentEntity);
+
+        if (contentEntity.getApproved()) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            String formattedStart = formatter.format(Date.from(updatedContentEntity.getStartDate()));
+            String formattedEnd = formatter.format(Date.from(updatedContentEntity.getEndDate()));
+
+            String messageContent = "You ad \"" + updatedContentEntity.getAdName()
+                    + "\" has been approved for showing on billboard "
+                    + updatedContentEntity.getBillboard().getName()
+                    + " between " + formattedStart
+                    + " and " + formattedEnd + ".";
+            asyncMailService.sendSimpleMailAsync(updatedContentEntity.getUser().getEmail(), messageContent);
+        }
+    }
+
+    public void setDeleted(Integer id) {
+        ContentEntity contentEntity = contentRepository.findById(id).orElse(null);
+        if (contentEntity == null) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+        }
+
+        contentEntity.setDeleted(true);
+        ContentEntity updatedContentEntity = contentRepository.saveAndFlush(contentEntity);
+
+        if (contentEntity.getApproved()) {
+            String messageContent = "You ad \"" + updatedContentEntity.getAdName()
+                    + "\" has been deleted for violating our user community rules.";
+            asyncMailService.sendSimpleMailAsync(updatedContentEntity.getUser().getEmail(), messageContent);
+        }
+    }
+
+    @SneakyThrows
+    public FileDto getFile(Integer id) {
+
+        if (!contentRepository.existsById(id)) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Ad with that id does not exist in the database.");
+        }
+        FileDto fileDto = new FileDto();
+        String contentDirectory = "digital-signage-fs" + File.separator + id;
+
+        File directory = new File(contentDirectory);
+        File[] files = directory.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return file.isFile();
+            }
+        });
+
+        if (files != null && files[0] != null) {
+            fileDto.setFilename(files[0].getName());
+            fileDto.setContent(Files.readAllBytes(files[0].toPath()));
+            return fileDto;
+        }
+
+        throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while processing request.");
+    }
+
+    public List<FileDto> getAllAdsForBillboard(Integer billboardId) {
+        List<ContentEntity> contents = contentRepository.getAllByBillboardId(billboardId);
+        List<FileDto> ads = new ArrayList<>();
+
+        for (ContentEntity c : contents) {
+            ads.add(getFile(c.getId()));
+        }
+
+        return ads;
     }
 }

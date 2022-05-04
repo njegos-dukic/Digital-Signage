@@ -131,60 +131,9 @@
           <div class="recentOrders">
             <div class="cardHeader">
               <h2>
-                Korisnici&nbsp;&nbsp;&nbsp;<ion-icon
-                  style="position: relative; top: 4px;"
-                  name="add-circle-outline"
-                  class="clicable"
-                ></ion-icon>
+                Reklame
               </h2>
             </div>
-  
-            <!-- <div id="newUserModal" class="modal">
-              <div class="modal-content" *ngIf="newUser">
-                <div style="grid-template-columns: 1fr;" class="centered details">
-                  <div class="recentOrders">
-                    <div style="padding-right: 15px; padding-left: 15px; padding-top: 10px; padding-bottom: 10px;">
-                    <div class="cardHeader" style="padding: 15px;">
-                      <h4>DODAVANJE&nbsp;KORISNIKA</h4>
-                    </div>
-                    <div class="cardHeader">
-                      <div class="login-container">
-                        <input type="text" placeholder="Korisničko ime" required [(ngModel)]="newUser.username" [ngModelOptions]="{standalone: true}"/>
-                        <input type="text" placeholder="Lozinka" required [(ngModel)]="newUser.password" [ngModelOptions]="{standalone: true}"/>
-                        <input type="text" placeholder="Email" required [(ngModel)]="newUser.email" [ngModelOptions]="{standalone: true}" />
-                        <div class="separator"></div>
-                        <input (click)="addUser(newUser)" type="submit" value="Kreiraj&nbsp;korisnika" />
-                        <input (click)="closeModal()" type="button" value="Zatvori" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div> -->
-  
-            <!-- <div id="editUserModal" class="modal">
-              <div class="modal-content" *ngIf="currentlyEditedUser">
-                <div style="grid-template-columns: 1fr;" class="centered details">
-                  <div class="recentOrders">
-                    <div style="padding-right: 15px; padding-left: 15px; padding-top: 10px; padding-bottom: 10px;">
-                    <div class="cardHeader" style="padding: 15px;">
-                      <h4>IZMJENA&nbsp;KORISNIKA</h4>
-                    </div>
-                    <div class="cardHeader">
-                      <div class="login-container">
-                        <input type="text" placeholder="Korisničko ime" required [(ngModel)]="currentlyEditedUser.username" [ngModelOptions]="{standalone: true}" />
-                        <input type="text" placeholder="Email" required [(ngModel)]="currentlyEditedUser.email" [ngModelOptions]="{standalone: true}"/>
-                        <div class="separator"></div>
-                        <input (click)="updateUser(this.currentlyEditedUser)" type="submit" value="Sačuvaj&nbsp;izmjene" />
-                        <input (click)="closeEditModal()" type="button" value="Zatvori" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div> -->
   
             <table style="border-collapse: separate;">
               <thead>
@@ -224,11 +173,18 @@
                   <td style="float: right">
                     <span style="display: flex; flex-direction: row;">
                       <span
+                        (click)="getAd(ad)"
+                        class="status return clicable"
+                        style="background-color: #7d7d7d"
+                        >Preuzmi
+                      </span>
+                      &nbsp;&nbsp;
+                      <span
                         (click)="deleteAd(ad)"
                         class="status return clicable"
                         style="background-color: #7d7d7d"
-                        >Obriši</span
-                      >
+                        >Obriši
+                      </span>
                     </span>
                   </td>
                 </tr>
