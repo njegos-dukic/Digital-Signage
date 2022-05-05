@@ -118,11 +118,24 @@ export class UsersComponent implements OnInit {
   }
 
   addUser(user: NewUser) {
+    if (!this.validateEmail(user.email)) {
+      this.toastr.warning("Molimo unesite validan email.", "Neuspješno kreiranje korisnika."); 
+      return;
+    } 
+
     this.userService.addUser(user).subscribe({
       next: () => { this.closeModal(); this.ngOnInit(); this.newUser = { username: "", email: "", password: "" }; this.toastr.success(user.username + "'s account is created.", 'Account created'); },
       error: (e) => { console.log(e); this.toastr.error(e.error, "Error while creating " + user.username + "'s account."); }
     });
   }
+
+  validateEmail = (email: any) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
 
   handleSearch(query: string) {
     this.users = [...this.usersCopy];

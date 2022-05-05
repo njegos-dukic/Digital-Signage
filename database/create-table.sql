@@ -36,11 +36,11 @@ CREATE TABLE IF NOT EXISTS `digital-signage`.`billboard` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(256) NOT NULL,
   `city` VARCHAR(256) NOT NULL,
-  `daily_rate` FLOAT NOT NULL,
+  `daily_rate` DECIMAL(6,2) NOT NULL,
   `available` TINYINT NOT NULL,
   `deleted` TINYINT NOT NULL,
-  `lat` FLOAT NULL,
-  `lng` FLOAT NULL,
+  `lat` DECIMAL(9,7) NULL,
+  `lng` DECIMAL(9,7) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -52,12 +52,12 @@ CREATE TABLE IF NOT EXISTS `digital-signage`.`content` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `billboard_id` INT NOT NULL,
-  `ad_name` VARCHAR(1024) NOT NULL,
   `deleted` TINYINT NOT NULL,
   `approved` TINYINT NOT NULL,
   `start_date` DATETIME NOT NULL,
   `end_date` DATETIME NOT NULL,
-  `total_cost` FLOAT NOT NULL,
+  `total_cost` DECIMAL(10,2) NOT NULL,
+  `ad_name` VARCHAR(1024) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_content_billboard1_idx` (`billboard_id` ASC) VISIBLE,
   CONSTRAINT `fk_content_user`

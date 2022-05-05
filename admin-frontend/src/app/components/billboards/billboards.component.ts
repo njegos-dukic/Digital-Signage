@@ -15,6 +15,7 @@ export class BillboardsComponent implements OnInit {
   query: string = "";
   newBillboard: BillboardDto = { id: 0, name: "", city: "", dailyRate: 0, available: true, lat: 0, lng: 0 };
   currentlyEditedBillboard!: BillboardEntity;
+  newDailyRate: string = "";
   currentlyEditedBillboardsLocation!: BillboardEntity;
 
   lat = 44.772;
@@ -87,6 +88,20 @@ export class BillboardsComponent implements OnInit {
   }
 
   addBillboard(billboard: BillboardDto) {
+    try {
+      this.newBillboard.dailyRate = Number(this.newDailyRate); 
+    } catch (Exception) {
+      this.toastr.warning("Molimo popunite ispravno sva polja.", "Neuspješno kreiranje bilborda."); 
+      return;
+    }
+
+    if (!this.newBillboard.city || this.newBillboard.city.length < 3 || !this.newBillboard.name || this.newBillboard.name.length < 3 || !this.newBillboard.dailyRate || this.newBillboard.dailyRate <= 0) {
+      this.toastr.warning("Molimo popunite ispravno sva polja.", "Neuspješno kreiranje bilborda."); 
+      return;
+    }
+
+    this.newDailyRate = "";
+
     this.billboardService.addBillboard(billboard).subscribe({
       next: () => { this.closeModal(); this.ngOnInit(); this.newBillboard = { id: 0, name: "", city: "", dailyRate: 0, available: true, lat: 0, lng: 0 }; this.toastr.success(billboard.name + " is created.", 'Billboard created'); },
       error: (e: any) => { console.log(e); this.toastr.error(e.error, "Error while creating " + billboard.name + "'."); }
@@ -140,8 +155,8 @@ export class BillboardsComponent implements OnInit {
   }
 
   placeMarker(event: any) {
-    this.lat = event.latLng.lat();
-    this.lng = event.latLng.lng();
+    this.lat = event.latLng.lat().toFixed(9);
+    this.lng = event.latLng.lng().toFixed(9);
   }
 
   handleSearch(query: string) {

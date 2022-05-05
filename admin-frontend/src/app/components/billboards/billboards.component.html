@@ -150,9 +150,9 @@
                   </div>
                   <div class="cardHeader">
                     <div class="login-container">
-                      <input type="text" placeholder="Ime" required [(ngModel)]="newBillboard.name" [ngModelOptions]="{standalone: true}"/>
+                      <input type="text" placeholder="Naziv&nbsp;bilborda" required [(ngModel)]="newBillboard.name" [ngModelOptions]="{standalone: true}"/>
                       <input type="text" placeholder="Grad" required [(ngModel)]="newBillboard.city" [ngModelOptions]="{standalone: true}"/>
-                      <input type="text" placeholder="Cijena&nbsp;po&nbsp;danu" required [(ngModel)]="newBillboard.dailyRate" [ngModelOptions]="{standalone: true}" />
+                      <input type="text" placeholder="Cijena&nbsp;po&nbsp;danu" required [(ngModel)]="newDailyRate" [ngModelOptions]="{standalone: true}" />
                       <div class="separator"></div>
                       <input (click)="addBillboard(newBillboard)" type="submit" value="Kreiraj&nbsp;billbord" />
                       <input (click)="closeModal()" type="button" value="Zatvori" />
