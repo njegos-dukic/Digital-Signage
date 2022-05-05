@@ -166,7 +166,7 @@ function MainScreen() {
                 />
                 {typeFile.includes("video") ? (
                   <video
-                    
+                    muted
                     id="uploaded-image"
                     src={image}
                     draggable={false}
