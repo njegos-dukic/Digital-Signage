@@ -15,6 +15,7 @@ export class PlayerComponent implements OnInit {
   billboards: any[] = [];
   src: any;
   src1: string = "./../../assets/logo.png"
+  counter: number = 0;
 
   selected: Boolean = false;
   selectedBillboard: any;
@@ -37,10 +38,16 @@ export class PlayerComponent implements OnInit {
 
   handleNext(willShowOurs: Boolean) {
     if (willShowOurs) {
-      this.isVideo = false;
-      this.isImage = false;
-      this.isOurs = true;
-      setTimeout(() => this.handleNext(false), 3000);
+      this.counter++;
+      if (this.counter % 3 == 0) {
+        this.isVideo = false;
+        this.isImage = false;
+        this.isOurs = true;
+      }
+
+      else {
+        this.handleNext(false);
+      }
     }
 
     else if (this.ads[0].filename.toLowerCase().endsWith(".mp4")) {
@@ -81,6 +88,10 @@ export class PlayerComponent implements OnInit {
           this.ads = res;
           if(this.ads.length > 0) {
             this.handleNext(false);
+          }
+          else { 
+            this.selected = false;
+            alert("Nema sadrzaja za prikazivanje!");
           }
         },
         error: () => console.log("Error happened.") 

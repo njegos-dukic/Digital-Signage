@@ -9,9 +9,11 @@ import org.unibl.etf.ds.model.dto.FileDto;
 import org.unibl.etf.ds.model.dto.NewContentDto;
 import org.unibl.etf.ds.model.entity.BillboardEntity;
 import org.unibl.etf.ds.model.entity.ContentEntity;
+import org.unibl.etf.ds.model.entity.LogEntity;
 import org.unibl.etf.ds.model.entity.UserEntity;
 import org.unibl.etf.ds.repository.BillboardRepository;
 import org.unibl.etf.ds.repository.ContentRepository;
+import org.unibl.etf.ds.repository.LogRepository;
 import org.unibl.etf.ds.repository.UserRepository;
 
 import java.io.File;
@@ -34,6 +36,7 @@ public class ContentService {
     private final AsyncMailService asyncMailService;
     private final UserRepository userRepository;
     private final BillboardRepository billboardRepository;
+    private final LogRepository logRepository;
 
     public List<ContentEntity> getAllAvailable() {
         return contentRepository.getAllByDeleted(false);
@@ -90,6 +93,11 @@ public class ContentService {
             throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while processing request.");
         }
 
+        LogEntity logEntity = new LogEntity();
+        logEntity.setDateTime(Instant.now());
+        logEntity.setType("INFO");
+        logEntity.setInfo(userEntity.getUsername() + ":" + "Dostavio reklamu.");
+        logRepository.saveAndFlush(logEntity);
         return inserted;
     }
 
@@ -124,12 +132,6 @@ public class ContentService {
 
         contentEntity.setDeleted(true);
         ContentEntity updatedContentEntity = contentRepository.saveAndFlush(contentEntity);
-
-        if (contentEntity.getApproved()) {
-            String messageContent = "You ad \"" + updatedContentEntity.getAdName()
-                    + "\" has been deleted for violating our user community rules.";
-            asyncMailService.sendSimpleMailAsync(updatedContentEntity.getUser().getEmail(), messageContent);
-        }
     }
 
     @SneakyThrows
@@ -159,7 +161,7 @@ public class ContentService {
     }
 
     public List<FileDto> getAllAdsForBillboard(Integer billboardId) {
-        List<ContentEntity> contents = contentRepository.getAllByBillboardId(billboardId);
+        List<ContentEntity> contents = contentRepository.getAllByBillboardIdAndDeletedAndApproved(billboardId, false, true);
         List<FileDto> ads = new ArrayList<>();
 
         for (ContentEntity c : contents) {
@@ -167,5 +169,9 @@ public class ContentService {
         }
 
         return ads;
+    }
+
+    public List<ContentEntity> getAllAdsForUser(Integer userId) {
+        return contentRepository.getAllByUserIdAndDeleted(userId, false);
     }
 }

@@ -10,28 +10,41 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from "react";
-
-function createData(name, billboard, start, end, price, media) {
-  return { name, billboard, start, end, price, media };
-}
-
-const orders = [
-  createData('Chipsy Reklama', "Boska 2", "12-04-2022", "22-04-2022", 4231.00, "Link"),
-  createData('Chipsy Reklama', "Boska 2", "12-04-2022", "22-04-2022", 4231.00, "Link"),
-  createData('Chipsy Reklama', "Boska 2", "12-04-2022", "22-04-2022", 4231.00, "Link")
-];
-
+import { useEffect, useState } from "react";
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 function History() {
+  const [orders, setOrders] = useState([]);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!localStorage.getItem("user")) {
       navigate('/login');
     }
    }, []);
 
+   useEffect(() => {
+     let id = JSON.parse(localStorage.getItem("user")).id;
+     console.log("USER: ", id);
+      axios.get(`https://localhost:9000/api/v1/content/user/${id}/ad`)
+        .then(res => {
+          setOrders(res.data);
+        },
+        err => toast.error(err.response.data, {position: toast.POSITION.BOTTOM_RIGHT, theme: "colored"}))
+   }, []);
 
-  const navigate = useNavigate();
+  function handleDelete(id) {
+    axios.delete(`https://localhost:9000/api/v1/content/delete/${id}`)
+      .then(() => {
+        setOrders(orders.filter(o => o.id != id))
+        toast.success("Uspjesno obrisana reklama.", {position: toast.POSITION.BOTTOM_RIGHT, theme: "colored"});
+      },
+      err => toast.error(err.response.data, {position: toast.POSITION.BOTTOM_RIGHT, theme: "colored"}))
+   }
+
   return (
     <Layout>
     <Container style={{width: "95%"}}>
@@ -41,24 +54,26 @@ function History() {
                 <TableHead>
                     <TableRow style={{backgroundColor: "rgb(37, 150, 190)"}}>
                         <TableCell><b style={{color: "white"}}>Naziv reklame</b></TableCell>
-                        <TableCell align="right"><b style={{color: "white"}}>Bilbord</b></TableCell>
-                        <TableCell align="right"><b style={{color: "white"}}>Datum pocetka</b></TableCell>
-                        <TableCell align="right"><b style={{color: "white"}}>Datum zavrsetka</b></TableCell>
-                        <TableCell align="right"><b style={{color: "white"}}>Ukupna cijena</b></TableCell>
-                        <TableCell align="right"><b style={{color: "white"}}>Media</b></TableCell>
-                        <TableCell align="right"><b style={{color: "white"}}>Zatrazi brisanje</b></TableCell>
+                        <TableCell align="center"><b style={{color: "white"}}>Bilbord</b></TableCell>
+                        <TableCell align="center"><b style={{color: "white"}}>Datum početka</b></TableCell>
+                        <TableCell align="center"><b style={{color: "white"}}>Datum završetka</b></TableCell>
+                        <TableCell align="center"><b style={{color: "white"}}>Status</b></TableCell>
+                        <TableCell align="center"><b style={{color: "white"}}>Cijena</b></TableCell>
+                        <TableCell align="center"><b style={{color: "white"}}>Sadržaj</b></TableCell>
+                        <TableCell align="right"></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {orders.map((order, id) => (
                         <TableRow key={id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell component="th" scope="row">{order.name}</TableCell>
-                        <TableCell align="right">{order.billboard}</TableCell>
-                        <TableCell align="right">{order.start}</TableCell>
-                        <TableCell align="right">{order.end}</TableCell>
-                        <TableCell align="right">{order.price}</TableCell>
-                        <TableCell align="right">{order.media}</TableCell>
-                        <TableCell align="right"><Button variant="outlined">OBRISI</Button></TableCell>
+                          <TableCell component="th" scope="row">{order.adName}</TableCell>
+                          <TableCell align="center">{order.billboard.name}</TableCell>
+                          <TableCell align="center">{new Date(order.startDate).toLocaleDateString('sr-Latn')}</TableCell>
+                          <TableCell align="center">{new Date(order.endDate).toLocaleDateString('sr-Latn')}</TableCell>
+                          <TableCell align="center"><b>{order.approved ? <span style={{color: "green"}}>ODOBRENO</span> : <span style={{color: "orange"}}>OBRADA</span> }</b></TableCell>
+                          <TableCell align="center">{order.totalCost.toFixed(2) + " KM"}</TableCell>
+                          <TableCell align="center"><a href={ 'https://localhost:9000/api/v1/content/ad/' + order.id }>Link</a></TableCell>
+                          <TableCell align="right" onClick={() => handleDelete(order.id)}><Button variant="outlined">OBRIŠI</Button></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

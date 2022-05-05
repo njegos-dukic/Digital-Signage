@@ -78,7 +78,7 @@
     <div class="cardBox">
       <div class="card">
         <div>
-          <div class="numbers">1,504</div>
+          <div class="numbers">{{ clicks }}</div>
           <div class="cardName">Posjeta</div>
         </div>
         <div class="iconBx">
@@ -89,8 +89,8 @@
     
       <div class="card">
         <div>
-          <div class="numbers">75</div>
-          <div class="cardName">Novih reklama</div>
+          <div class="numbers">{{ ads.length }}</div>
+          <div class="cardName">Reklama</div>
         </div>
         <div class="iconBx">
           <ion-icon name="cart-outline"></ion-icon>
@@ -99,7 +99,7 @@
       
       <div class="card">
         <div>
-          <div class="numbers">12</div>
+          <div class="numbers">{{ messages.length }}</div>
           <div class="cardName">Poruka</div>
         </div>
         <div class="iconBx">
@@ -109,7 +109,7 @@
       
       <div class="card">
         <div>
-          <div class="numbers">BAM&nbsp;7.842&nbsp;&nbsp;</div>
+          <div class="numbers">{{ profit.toFixed(2) }}&nbsp;KM&nbsp;</div>
           <div class="cardName">Zarada</div>
         </div>
         <div class="iconBx">
@@ -134,62 +134,18 @@
               <td>Status</td>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngFor="let ad of adsSliced">
             <tr>
-              <td>Bilbo Bilbordić</td>
-              <td>Delta 1</td>
-              <td>Chipsy s Mesijem</td>
-              <td>BAM&nbsp;384.50</td>
-              <td><span class="status delivered">Odobreno</span></td>
-            </tr>
-            <tr>
-              <td>Brusli Karatić</td>
-              <td>Boska</td>
-              <td>Novi audi onaj crni</td>
-              <td>BAM&nbsp;731.50</td>
-              <td><span class="status pending">Na&nbsp;čekanju</span></td>
-            </tr>
-            <tr>
-              <td>Musolini Hitler</td>
-              <td>Čajavec</td>
-              <td>Moj kamp</td>
-              <td>BAM&nbsp;1231.50</td>
-              <td><span class="status return">Odbijeno</span></td>
-            </tr>
-            <tr>
-              <td>Saša Kovačević</td>
-              <td>Boska 2</td>
-              <td>Leto je vrelo je</td>
-              <td>BAM&nbsp;621.50</td>
-              <td><span class="status inprogress">Obrađuje&nbsp;se</span></td>
-            </tr>
-            <tr>
-              <td>Miloš Biković</td>
-              <td>ETF</td>
-              <td>Montevideo</td>
-              <td>BAM&nbsp;5121.50</td>
-              <td><span class="status delivered">Odobreno</span></td>
-            </tr>
-            <tr>
-              <td>Joka Nikolić</td>
-              <td>Stanica</td>
-              <td>NBA Finale</td>
-              <td>BAM&nbsp;561.30</td>
-              <td><span class="status inprogress">Obrađuje&nbsp;se</span></td>
-            </tr>
-            <tr>
-              <td>Nemanja Bjelica</td>
-              <td>Lesnina</td>
-              <td>Rođendan</td>
-              <td>BAM&nbsp;71.30</td>
-              <td><span class="status return">Odbijeno</span></td>
-            </tr>
-            <tr>
-              <td>Marin Marinović</td>
-              <td>Centar</td>
-              <td>Smoki</td>
-              <td>BAM&nbsp;751.30</td>
-              <td><span class="status delivered">Odobreno</span></td>
+              <td>{{ ad.user.username }}</td>
+              <td>{{ ad.billboard.name }}</td>
+              <td>{{ ad.adName }}</td>
+              <td>BAM&nbsp;{{ ad.totalCost.toFixed(2) }}</td>
+              <td>
+                <div *ngIf="ad.approved; then approved else waiting"></div>
+                <ng-template #approved><span class="status delivered">Odobreno</span></ng-template>
+                <ng-template #waiting><span class="status pending">Na&nbsp;čekanju</span></ng-template>
+              </td>
+
             </tr>
           </tbody>
         </table>
@@ -199,22 +155,10 @@
       <div class="cardHeader">
           <h2>Novosti</h2>
         </div>
-        <table>
+        <table *ngFor="let log of logs">
           <tr>
             <td width="60px"><div class="imgBx"><img style="scale: 0.7" src="../../../assets/blue-logo.png" alt="Novost"></div></td>
-            <td><h4>Mitar Mirić<br><span>Kreirao nalog u 16:48.</span></h4></td>
-          </tr>
-          <tr>
-            <td width="60px"><div class="imgBx"><img style="scale: 0.7" src="../../../assets/blue-logo.png" alt="Novost"></div></td>
-            <td><h4>Brusli Karatić<br><span>Dostavio reklamu u 16:04.</span></h4></td>
-          </tr>
-          <tr>
-            <td width="60px"><div class="imgBx"><img style="scale: 0.7" src="../../../assets/blue-logo.png" alt="Novost"></div></td>
-            <td><h4>Nenad Nešić<br><span>Poslao poruku u 15:27.</span></h4></td>
-          </tr>
-          <tr>
-            <td width="60px"><div class="imgBx"><img style="scale: 0.7" src="../../../assets/blue-logo.png" alt="Novost"></div></td>
-            <td><h4>Nataša Bekvalac<br><span>Poslala poruku u 14:49.</span></h4></td>
+            <td><h4>{{ log.info.split(":")[0] }}<br><span>{{ log.info.split(":")[1] }}&nbsp;&nbsp;&nbsp;{{ log.dateTime.toLocaleTimeString("sr-Latn") }}</span></h4></td>
           </tr>
         </table>
     </div>

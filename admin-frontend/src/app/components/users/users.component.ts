@@ -14,6 +14,8 @@ export class UsersComponent implements OnInit {
   newUser: NewUser = { username: "", email: "", password: "" };
   currentlyEditedUser!: User;
   users: User[] = [];
+  usersCopy: User[] = [];
+  query: string = "";
   
   constructor(private userService: UserService, private toastr: ToastrService) { }
 
@@ -22,7 +24,7 @@ export class UsersComponent implements OnInit {
       this.updateTheme(JSON.parse(localStorage.getItem("color") || ''));
       
     this.userService.getUsers().subscribe({
-      next: (users) => this.users = users,
+      next: (users) => { this.users = users; this.usersCopy = [...this.users]; },
       error: () => this.toastr.error("Error gettings users from the database.", 'Error')
     });
 
@@ -78,7 +80,7 @@ export class UsersComponent implements OnInit {
 
   deleteUser(user: User) {
     this.userService.deleteUser(user.id).subscribe({
-      next: () => { this.toastr.success(user.username + "'s account is deleted.", 'Account deleted'); this.users = this.users.filter(u => u != user) },
+      next: () => { this.toastr.success(user.username + "'s account is deleted.", 'Account deleted'); this.users = this.users.filter(u => u != user); this.usersCopy = [...this.users]; },
       error: () => { this.toastr.error("Error while deleting " + user.username + "'s account.", 'Error'); }
     });
   }
@@ -120,5 +122,16 @@ export class UsersComponent implements OnInit {
       next: () => { this.closeModal(); this.ngOnInit(); this.newUser = { username: "", email: "", password: "" }; this.toastr.success(user.username + "'s account is created.", 'Account created'); },
       error: (e) => { console.log(e); this.toastr.error(e.error, "Error while creating " + user.username + "'s account."); }
     });
+  }
+
+  handleSearch(query: string) {
+    this.users = [...this.usersCopy];
+    if (query.length !== 0 || query !== null || query !== '') {
+      this.users = [];
+      this.usersCopy.forEach(u => {
+        if (u.username.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+        this.users.push(u);
+      });
+    }
   }
 }

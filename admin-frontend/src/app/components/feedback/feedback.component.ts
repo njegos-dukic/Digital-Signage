@@ -11,6 +11,8 @@ import { MessagesService } from 'src/app/services/messages.service';
 export class FeedbackComponent implements OnInit {
 
   messages: FeedbackDto[] = [];
+  messagesCopy: FeedbackDto[] = [];
+  query: string = "";
 
   constructor(private messageService: MessagesService, private toastr: ToastrService) { }
 
@@ -18,7 +20,7 @@ export class FeedbackComponent implements OnInit {
     if (localStorage.getItem("color"))
       this.updateTheme(JSON.parse(localStorage.getItem("color") || ''));
     this.messageService.getAll().subscribe({
-      next: (mes) => this.messages = mes,
+      next: (mes) => { this.messages = mes, this.messagesCopy = [...this.messages]; },
       error: (e) => this.toastr.error("Can't get messages from the server.", "Error")
     });
   }
@@ -41,8 +43,19 @@ export class FeedbackComponent implements OnInit {
 
   deleteFeedback(id: number) {
     this.messageService.delete(id).subscribe({
-      next: () => { this.messages = this.messages.filter(m => m.id != id); this.toastr.success("", 'Feedback deleted.'); },
+      next: () => { this.messages = this.messages.filter(m => m.id != id); this.messagesCopy = [...this.messages]; this.toastr.success("", 'Feedback deleted.'); },
       error: () => { this.toastr.error("", "Error while deleting feedback."); }
     });
+  }
+
+  handleSearch(query: string) {
+    this.messages = [...this.messagesCopy];
+    if (query.length !== 0 || query !== null || query !== '') {
+      this.messages = [];
+      this.messagesCopy.forEach(m => {
+        if (m.user.username.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+        this.messages.push(m);
+      });
+    }
   }
 }

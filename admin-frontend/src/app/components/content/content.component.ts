@@ -11,6 +11,11 @@ import { ContentService } from 'src/app/services/content.service';
 export class ContentComponent implements OnInit {
 
   ads: ContentDto[] = [];
+  adsCopy: ContentDto[] = [];
+
+  queryName: string = "";
+  queryBillboard: string = "";
+  queryUser: string = "";
 
   constructor(private contentService: ContentService, private toastr: ToastrService) { }
 
@@ -21,6 +26,7 @@ export class ContentComponent implements OnInit {
     this.contentService.getAll().subscribe({
       next: (res) => { 
         this.ads = res; 
+        this.adsCopy = [...this.ads];
         this.ads.forEach(a => { a.startDate = new Date(a.startDate); a.endDate = new Date(a.endDate); })
       },
       error: () => this.toastr.error("Error gettings ads from the database.", 'Error')
@@ -52,12 +58,51 @@ export class ContentComponent implements OnInit {
 
   deleteAd(ad: ContentDto) {
     this.contentService.delete(ad.id).subscribe({
-      next: () => { this.toastr.success(ad.adName + " is deleted.", 'Ad deleted'); this.ads = this.ads.filter(a => a != ad) },
+      next: () => { this.toastr.success(ad.adName + " is deleted.", 'Ad deleted'); this.ads = this.ads.filter(a => a != ad); this.adsCopy = [...this.ads]; },
       error: () => { this.toastr.error("Error while deleting " + ad.adName + ".", 'Error'); }
     });
   }
 
   getAd(ad: ContentDto) {
     window.open("https://localhost:9000/api/v1/content/ad/" + ad.id, "_blank");
+  }
+
+  handleSearchName(query: string) {
+    this.ads = [...this.adsCopy]; 
+    this.queryBillboard = "";
+    this.queryUser = "";
+    if (query.length !== 0) {
+      this.ads = [];
+      this.adsCopy.forEach(a => {
+        if(a.adName.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+          this.ads.push(a);
+      });
+    }
+  }
+
+  handleSearchBillboard(query: string) {
+    this.ads = [...this.adsCopy]; 
+    this.queryName = "";
+    this.queryUser = "";
+    if (query.length !== 0) {
+      this.ads = [];
+      this.adsCopy.forEach(a => {
+        if(a.billboard.name.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+          this.ads.push(a);
+      });
+    }
+  }
+
+  handleSearchUser(query: string) {
+    this.ads = [...this.adsCopy]; 
+    this.queryName = "";
+    this.queryBillboard = "";
+    if (query.length !== 0) {
+      this.ads = [];
+      this.adsCopy.forEach(a => {
+        if(a.user.username.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+          this.ads.push(a);
+      });
+    }
   }
 }

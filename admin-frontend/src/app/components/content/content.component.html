@@ -130,9 +130,15 @@
         <div style="grid-template-columns: 1fr;" class="details">
           <div class="recentOrders">
             <div class="cardHeader">
-              <h2>
+             <span> <h2>
                 Reklame
               </h2>
+              <div style="display: flex; flex-direction: row;">
+                  <input style="padding-left: 4px; margin-right: 8px;" (ngModelChange)="handleSearchName($event)" type="text" placeholder="Naziv" required [(ngModel)]="queryName" [ngModelOptions]="{standalone: true}"/>
+                  <input style="padding-left: 4px; margin-right: 8px;" (ngModelChange)="handleSearchBillboard($event)" type="text" placeholder="Bilbord" required [(ngModel)]="queryBillboard" [ngModelOptions]="{standalone: true}"/>
+                  <input style="padding-left: 4px;" (ngModelChange)="handleSearchUser($event)" type="text" placeholder="Korisnik" required [(ngModel)]="queryUser" [ngModelOptions]="{standalone: true}"/>
+              </div>
+            </span>
             </div>
   
             <table style="border-collapse: separate;">

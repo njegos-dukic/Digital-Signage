@@ -11,6 +11,8 @@ import { BillboardService } from 'src/app/services/billboard.service';
 export class BillboardsComponent implements OnInit {
 
   billboards: BillboardEntity[] = [];
+  billboardsCopy: BillboardEntity[] = [];
+  query: string = "";
   newBillboard: BillboardDto = { id: 0, name: "", city: "", dailyRate: 0, available: true, lat: 0, lng: 0 };
   currentlyEditedBillboard!: BillboardEntity;
   currentlyEditedBillboardsLocation!: BillboardEntity;
@@ -25,7 +27,7 @@ export class BillboardsComponent implements OnInit {
       this.updateTheme(JSON.parse(localStorage.getItem("color") || ''));
       
     this.billboardService.getAll().subscribe({
-      next: res => this.billboards = res,
+      next: res => { this.billboards = res; this.billboardsCopy = [...this.billboards] },
       error: () =>  this.toastr.error("Error gettings billboards from the database.", 'Error')
     });
 
@@ -73,7 +75,7 @@ export class BillboardsComponent implements OnInit {
 
   deleteBillboard(billboard: BillboardEntity) {
     this.billboardService.delete(billboard.id).subscribe({
-      next: () => { this.toastr.success(billboard.name + " is deleted.", 'Billboard deleted'); this.billboards = this.billboards.filter(b => b != billboard) },
+      next: () => { this.toastr.success(billboard.name + " is deleted.", 'Billboard deleted'); this.billboards = this.billboards.filter(b => b != billboard); this.billboardsCopy = [...this.billboards] },
       error: () => { this.toastr.error("Error while deleting " + billboard.name + ".", 'Error'); }
     });
   }
@@ -140,5 +142,16 @@ export class BillboardsComponent implements OnInit {
   placeMarker(event: any) {
     this.lat = event.latLng.lat();
     this.lng = event.latLng.lng();
+  }
+
+  handleSearch(query: string) {
+    this.billboards = [...this.billboardsCopy];
+    if (query.length !== 0 || query !== null || query !== '') {
+      this.billboards = [];
+      this.billboardsCopy.forEach(b => {
+        if (b.name.toLowerCase().indexOf(query.toLowerCase()) !== -1 || b.city.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+        this.billboards.push(b);
+      });
+    }
   }
 }

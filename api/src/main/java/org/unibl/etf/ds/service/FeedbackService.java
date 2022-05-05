@@ -9,9 +9,12 @@ import org.unibl.etf.ds.model.dto.AdminUserDto;
 import org.unibl.etf.ds.model.dto.FeedbackDto;
 import org.unibl.etf.ds.model.dto.NewFeedbackDto;
 import org.unibl.etf.ds.model.entity.FeedbackEntity;
+import org.unibl.etf.ds.model.entity.LogEntity;
 import org.unibl.etf.ds.model.entity.UserEntity;
 import org.unibl.etf.ds.repository.FeedbackRepository;
+import org.unibl.etf.ds.repository.LogRepository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +25,7 @@ public class FeedbackService {
     private final FeedbackRepository feedbackRepository;
     private final ModelMapper modelMapper;
     private final UserService userService;
+    private final LogRepository logRepository;
 
     public List<FeedbackDto> getAll() {
         return feedbackRepository.findAll()
@@ -38,6 +42,11 @@ public class FeedbackService {
             throw new HttpException(HttpStatus.BAD_REQUEST, "User with that Id does not exist.");
         }
         feedbackEntity.setUser(userEntity);
+        LogEntity logEntity = new LogEntity();
+        logEntity.setDateTime(Instant.now());
+        logEntity.setType("INFO");
+        logEntity.setInfo(userEntity.getUsername() + ":" + "Ostavio feedback.");
+        logRepository.saveAndFlush(logEntity);
         return feedbackRepository.saveAndFlush(feedbackEntity);
     }
 

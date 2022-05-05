@@ -130,14 +130,14 @@
       <div style="grid-template-columns: 1fr;" class="details">
         <div class="recentOrders">
           <div class="cardHeader">
-            <h2>
+            <span><h2>
               Bilbordi&nbsp;&nbsp;&nbsp;<ion-icon
                 (click)="showModal()"
                 style="position: relative; top: 4px;"
                 name="add-circle-outline"
                 class="clicable"
               ></ion-icon>
-            </h2>
+            </h2><input style="padding-left: 4px;" (ngModelChange)="handleSearch($event)" type="text" placeholder="Naziv ili grad" required [(ngModel)]="query" [ngModelOptions]="{standalone: true}"/></span>
           </div>
 
           <div id="newBillboardModal" class="modal">

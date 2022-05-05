@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.ds.model.dto.FeedbackDto;
 import org.unibl.etf.ds.model.dto.NewFeedbackDto;
 import org.unibl.etf.ds.model.entity.FeedbackEntity;
+import org.unibl.etf.ds.model.entity.LogEntity;
 import org.unibl.etf.ds.service.FeedbackService;
 
+import java.time.Instant;
 import java.util.List;
 
 @RestController

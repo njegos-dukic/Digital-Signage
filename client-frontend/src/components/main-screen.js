@@ -89,6 +89,12 @@ function MainScreen() {
   }
 
   function handleSubmit() {
+
+    if (!fileName) {
+      toast.warning("Molimo unesite naziv reklame.", {position: toast.POSITION.BOTTOM_RIGHT, theme: "colored"})
+      return;
+    }
+
     const FormData = require('form-data');
 
     const formData = new FormData();
@@ -108,7 +114,15 @@ function MainScreen() {
     axios.post("https://localhost:9000/api/v1/content", formData, config)
          .then(res => {
             toast.success("Uspješno poslata reklama.",  { position: toast.POSITION.BOTTOM_RIGHT, theme: "colored"} );
-            console.log(res.data);
+            setSelectedBillboard({});
+            setFileName("");
+            setDateRange([null, null]);
+            setImageMultipart(null);
+
+            setNumberOfDays({});
+            setIsUploaded(false);
+            setImage(null);
+            setTypeFile("");
           },
           err => toast.error(err.response.data, {position: toast.POSITION.BOTTOM_RIGHT, theme: "colored"})
         );
@@ -240,8 +254,9 @@ function MainScreen() {
             <Button onClick={() => window.open(`https://maps.google.com/?q=${selectedBillboard.lat},${selectedBillboard.lng}`)} variant="outlined" style={{ width: "18.5%", position: "absolute", top: 143 }}>Vidi&nbsp;na&nbsp;mapi</Button>
           </>
         }
-        <Button onClick={() => navigate('/history')} variant="outlined" style={{ width: "18.5%", position: "absolute", bottom: 185 }}>Istorija</Button>
-        <Button onClick={() => navigate('/statistic')} variant="outlined" style={{ width: "18.5%", position: "absolute", bottom: 130 }}>Statistika</Button>
+        <Button onClick={() => navigate('/history')} variant="outlined" style={{ width: "18.5%", position: "absolute", bottom: 240 }}>Istorija</Button>
+        <Button onClick={() => navigate('/statistic')} variant="outlined" style={{ width: "18.5%", position: "absolute", bottom: 185 }}>Statistika</Button>
+        <Button onClick={() => navigate('/feedback')} variant="outlined" style={{ width: "18.5%", position: "absolute", bottom: 130 }}>Napiši&nbsp;poruku</Button>
         <Button onClick={() => navigate('/login')} variant="contained" style={{ width: "18.5%", position: "absolute", bottom: 75 }}>Odjavi&nbsp;se</Button>
         {
           !isNaN(selectedBillboard.dailyRate * numberOfDays) && isUploaded &&

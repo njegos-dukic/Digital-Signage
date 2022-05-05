@@ -130,9 +130,9 @@
         <div style="grid-template-columns: 1fr;" class="details">
           <div class="recentOrders">
             <div class="cardHeader">
-              <h2>
+              <span><h2>
                 Poruke
-              </h2>
+              </h2><input style="padding-left: 4px;" (ngModelChange)="handleSearch($event)" type="text" placeholder="Korisničko ime" required [(ngModel)]="query" [ngModelOptions]="{standalone: true}"/></span>
             </div>
   
             <table style="border-collapse: separate;">

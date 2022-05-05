@@ -51,4 +51,9 @@ public class ContentController {
     public List<FileDto> getAdsForBillboard(@RequestParam Integer billboardId) {
         return contentService.getAllAdsForBillboard(billboardId);
     }
+
+    @GetMapping("/user/{userId}/ad")
+    public List<ContentEntity> getAdsForUser(@PathVariable Integer userId) {
+        return contentService.getAllAdsForUser(userId);
+    }
 }
