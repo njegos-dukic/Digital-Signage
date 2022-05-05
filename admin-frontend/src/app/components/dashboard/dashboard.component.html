@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body" style="overflow-y: hidden;">
 <div class="container">
   <div class="navigation">
     <ul>
@@ -76,7 +76,7 @@
     </div>
 
     <div class="cardBox">
-      <div class="card">
+      <div class="card non-clicable">
         <div>
           <div class="numbers">{{ clicks }}</div>
           <div class="cardName">Posjeta</div>
@@ -87,7 +87,7 @@
       </div>
     
     
-      <div class="card">
+      <div class="card non-clicable">
         <div>
           <div class="numbers">{{ ads.length }}</div>
           <div class="cardName">Reklama</div>
@@ -97,17 +97,17 @@
         </div>
       </div>
       
-      <div class="card">
+      <div class="card non-clicable">
         <div>
-          <div class="numbers">{{ messages.length }}</div>
-          <div class="cardName">Poruka</div>
+          <div class="numbers">{{ billboards.length }}</div>
+          <div class="cardName">Bilborda</div>
         </div>
         <div class="iconBx">
           <ion-icon name="chatbubbles-outline"></ion-icon>
         </div>
       </div>
       
-      <div class="card">
+      <div class="card non-clicable">
         <div>
           <div class="numbers">{{ profit.toFixed(2) }}&nbsp;KM&nbsp;</div>
           <div class="cardName">Zarada</div>
@@ -158,7 +158,7 @@
         <table *ngFor="let log of logs">
           <tr>
             <td width="60px"><div class="imgBx"><img style="scale: 0.7" src="../../../assets/blue-logo.png" alt="Novost"></div></td>
-            <td><h4>{{ log.info.split(":")[0] }}<br><span>{{ log.info.split(":")[1] }}&nbsp;&nbsp;&nbsp;{{ log.dateTime.toLocaleTimeString("sr-Latn") }}</span></h4></td>
+            <td><h4>{{ log.info.split(":")[0] }}<br><span>{{ log.info.split(":")[1] }}&nbsp;&nbsp;{{ log.dateTime.toLocaleDateString("sr-Latn") }}&nbsp;u&nbsp;{{ log.dateTime.toLocaleTimeString("sr-Latn") }}</span></h4></td>
           </tr>
         </table>
     </div>

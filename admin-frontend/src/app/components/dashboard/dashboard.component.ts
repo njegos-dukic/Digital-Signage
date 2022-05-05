@@ -5,6 +5,8 @@ import { ContentService } from 'src/app/services/content.service';
 import { FeedbackDto } from 'src/app/interfaces/feedbackDto';
 import { MessagesService } from 'src/app/services/messages.service';
 import { HttpClient } from '@angular/common/http';
+import { BillboardEntity } from 'src/app/interfaces/billboardEntity';
+import { BillboardService } from 'src/app/services/billboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private http: HttpClient, private toastr: ToastrService, private contentService: ContentService, private messageService: MessagesService) { }
+  constructor(private http: HttpClient, private toastr: ToastrService, private billboardService: BillboardService, private contentService: ContentService, private messageService: MessagesService) { }
 
   ads: ContentDto[] = [];
   adsSliced: ContentDto[] = [];
@@ -21,6 +23,7 @@ export class DashboardComponent implements OnInit {
   profit: number = 0;
   clicks: number = 0;
   logs: any[] = [];
+  billboards: BillboardEntity[] = [];
 
   ngOnInit(): void {
     if (localStorage.getItem("color"))
@@ -31,16 +34,21 @@ export class DashboardComponent implements OnInit {
       });
 
       this.http.get<any>("https://localhost:9000/api/v1/logs").subscribe({
-        next: (res) => { this.logs = res.splice(0, 4); this.logs.forEach(l => l.dateTime = new Date(l.dateTime)); }
+        next: (res) => { this.logs = res.reverse().splice(0, 4); this.logs.forEach(l => l.dateTime = new Date(l.dateTime)); }
       })
 
       this.contentService.getAll().subscribe({
         next: (res) => { 
-          this.ads = res; 
+          this.ads = res.reverse(); 
           this.ads.forEach(a => { this.profit += a.totalCost; a.startDate = new Date(a.startDate); a.endDate = new Date(a.endDate); })
-          this.adsSliced = this.ads.slice(0, 8);
+          this.adsSliced = this.ads.slice(0, 6);
         },
         error: () => this.toastr.error("Error gettings ads from the database.", 'Error')
+      });
+
+      this.billboardService.getAll().subscribe({
+        next: res => { this.billboards = res; },
+        error: () =>  this.toastr.error("Error gettings billboards from the database.", 'Error')
       });
 
       this.messageService.getAll().subscribe({
