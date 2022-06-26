@@ -39,7 +39,7 @@ public class UserService {
     public AdminUserDto deleteById(IdDto idDto) {
         UserEntity userEntity = getById(idDto.getId());
         if (userEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Identifikator ne postoji u bazi podataka.");
         }
         userRepository.delete(userEntity);
         return modelMapper.map(userEntity, AdminUserDto.class);
@@ -49,7 +49,7 @@ public class UserService {
 
         UserEntity userEntity = getById(adminUserDto.getId());
         if (userEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Identifikator ne postoji u bazi podataka.");
         }
 
         userEntity.setUsername(adminUserDto.getUsername());
@@ -62,15 +62,15 @@ public class UserService {
     public void resetPassword(IdDto idDto) {
         UserEntity userEntity = getById(idDto.getId());
         if (userEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Identifikator ne postoji u bazi podataka.");
         }
 
         String newPassword = "DS2022" + generateRandomAlphaNumericString(10);
         userEntity.setPassword(passwordEncoder.encode(newPassword));
         UserEntity updatedUserEntity = userRepository.saveAndFlush(userEntity);
-        String messageContent = "Password for the account " + updatedUserEntity.getUsername() + " has been reset." +
+        String messageContent = "Lozinka za nalog " + updatedUserEntity.getUsername() + " je resetovana." +
                                 "\n" +
-                                "New password is: " + newPassword;
+                                "Nova lozinka je: " + newPassword;
 
         asyncMailService.sendSimpleMailAsync(updatedUserEntity.getEmail(), messageContent);
     }
@@ -78,15 +78,15 @@ public class UserService {
     public void toggleStatus(IdDto idDto) {
         UserEntity userEntity = getById(idDto.getId());
         if (userEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Identifikator ne postoji u bazi.");
         }
 
         userEntity.setDisabled(!userEntity.getDisabled());
         UserEntity updatedUserEntity = userRepository.saveAndFlush(userEntity);
         if (updatedUserEntity.getDisabled()) {
-            String messageContent = "Account " + updatedUserEntity.getUsername() + " has been disabled." +
+            String messageContent = "Nalog " + updatedUserEntity.getUsername() + " je onemogucen." +
                                     "\n" +
-                                    "Contact administrator via contact form for more information.";
+                                    "Za vise informacija kontaktirajte administatora putem kontaktne forme.";
 
             asyncMailService.sendSimpleMailAsync(updatedUserEntity.getEmail(), messageContent);
         }
@@ -95,13 +95,13 @@ public class UserService {
     public void toggleAdmin(IdDto idDto) {
         UserEntity userEntity = getById(idDto.getId());
         if (userEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Identifikator ne postoji u bazi.");
         }
 
         userEntity.setIsAdmin(!userEntity.getIsAdmin());
         UserEntity updatedUserEntity = userRepository.saveAndFlush(userEntity);
         if (updatedUserEntity.getIsAdmin()) {
-            String messageContent = "Account " + updatedUserEntity.getUsername() + " is now administrator.";
+            String messageContent = "Nalog " + updatedUserEntity.getUsername() + " je sada administrator.";
             asyncMailService.sendSimpleMailAsync(updatedUserEntity.getEmail(), messageContent);
         }
     }

@@ -54,21 +54,21 @@ public class ContentService {
 
         UserEntity userEntity = userRepository.findById(newContentDto.getUserId()).orElse(null);
         if (userEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "User does not exist.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Korisnik ne postoji.");
         }
 
         BillboardEntity billboardEntity = billboardRepository.findById(newContentDto.getBillboardId()).orElse(null);
         if (billboardEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Billboard does not exist.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Bilbord ne postoji.");
         }
 
         if(!startDate.truncatedTo(ChronoUnit.DAYS).isBefore(endDate.plus(1, ChronoUnit.DAYS).truncatedTo(ChronoUnit.DAYS))) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Start date must be before end date.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Datum pocetka prikazivanja mora da bude prije datuma kraja prikazivanja.");
         }
 
         if(startDate.truncatedTo(ChronoUnit.DAYS).isBefore(Instant.now().truncatedTo(ChronoUnit.DAYS)) ||
            endDate.truncatedTo(ChronoUnit.DAYS).isBefore(Instant.now().truncatedTo(ChronoUnit.DAYS))) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Start and end date must be in the future.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Datum pocetka i kraja prikazivanja moraju biti u buducnosti.");
         }
 
         contentEntity.setUser(userEntity);
@@ -90,13 +90,13 @@ public class ContentService {
         } catch (IOException e) {
             e.printStackTrace();
             contentRepository.delete(inserted);
-            throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while processing request.");
+            throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, "Greska prilikom procesiranja zahtjeva.");
         }
 
         LogEntity logEntity = new LogEntity();
         logEntity.setDateTime(Instant.now());
         logEntity.setType("INFO");
-        logEntity.setInfo(userEntity.getUsername() + ":" + "Dostavio reklamu.");
+        logEntity.setInfo(userEntity.getUsername() + ":" + "Dostavio/la reklamu.");
         logRepository.saveAndFlush(logEntity);
         return inserted;
     }
@@ -104,7 +104,7 @@ public class ContentService {
     public void toggleStatus(Integer id) {
         ContentEntity contentEntity = contentRepository.findById(id).orElse(null);
         if (contentEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Identifikator ne postoji u bazi.");
         }
 
         contentEntity.setApproved(!contentEntity.getApproved());
@@ -115,11 +115,11 @@ public class ContentService {
             String formattedStart = formatter.format(Date.from(updatedContentEntity.getStartDate()));
             String formattedEnd = formatter.format(Date.from(updatedContentEntity.getEndDate()));
 
-            String messageContent = "You ad \"" + updatedContentEntity.getAdName()
-                    + "\" has been approved for showing on billboard "
+            String messageContent = "Vasa reklama \"" + updatedContentEntity.getAdName()
+                    + "\" je odobrena za prikazivanje na bilbordu "
                     + updatedContentEntity.getBillboard().getName()
-                    + " between " + formattedStart
-                    + " and " + formattedEnd + ".";
+                    + " izmedju " + formattedStart
+                    + " i " + formattedEnd + ".";
             asyncMailService.sendSimpleMailAsync(updatedContentEntity.getUser().getEmail(), messageContent);
         }
     }
@@ -127,7 +127,7 @@ public class ContentService {
     public void setDeleted(Integer id) {
         ContentEntity contentEntity = contentRepository.findById(id).orElse(null);
         if (contentEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Id does not exist in the database.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Identifikator ne postoji u bazi.");
         }
 
         contentEntity.setDeleted(true);
@@ -138,7 +138,7 @@ public class ContentService {
     public FileDto getFile(Integer id) {
 
         if (!contentRepository.existsById(id)) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Ad with that id does not exist in the database.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Reklama sa datim identifikatorom ne postoji u bazi.");
         }
         FileDto fileDto = new FileDto();
         String contentDirectory = "digital-signage-fs" + File.separator + id;

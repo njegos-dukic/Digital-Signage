@@ -32,55 +32,58 @@ public class LoginRegisterService {
 
     public UserDto register(RegisterDto registerDto) {
         UserEntity userEntity = modelMapper.map(registerDto, UserEntity.class);
-        userEntity.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        if (userRepository.findByUsername(userEntity.getUsername()) == null) {
-            UserEntity newUserEntity = userRepository.saveAndFlush(userEntity);
-            LogEntity logEntity = new LogEntity();
-            logEntity.setDateTime(Instant.now());
-            logEntity.setType("INFO");
-            logEntity.setInfo(newUserEntity.getUsername() + ":" + "Kreirao nalog.");
-            logRepository.saveAndFlush(logEntity);
-            return modelMapper.map(newUserEntity, UserDto.class);
-        }
 
-        throw new HttpException(HttpStatus.BAD_REQUEST, "Username is taken.");
+        if (userRepository.findByUsername(userEntity.getUsername()) != null)
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Korisnicko ime je zauzeto.");
+
+        if (userRepository.findByEmail(userEntity.getEmail()) != null)
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Email je zauzet.");
+
+        userEntity.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        UserEntity newUserEntity = userRepository.saveAndFlush(userEntity);
+        LogEntity logEntity = new LogEntity();
+        logEntity.setDateTime(Instant.now());
+        logEntity.setType("INFO");
+        logEntity.setInfo(newUserEntity.getUsername() + ":" + "Kreirao/la nalog.");
+        logRepository.saveAndFlush(logEntity);
+        return modelMapper.map(newUserEntity, UserDto.class);
     }
 
     public UserDto login(LoginDto loginDto) {
         UserEntity userEntity = userRepository.findByUsername(loginDto.getUsername());
         increaseClicks();
         if (userEntity == null) {
-            throw new HttpException(HttpStatus.UNAUTHORIZED, "Credentials invalid.");
+            throw new HttpException(HttpStatus.UNAUTHORIZED, "Kredencijali nisu validni.");
         }
 
         if (canLogin(userEntity, loginDto.getPassword())) {
             LogEntity logEntity = new LogEntity();
             logEntity.setDateTime(Instant.now());
             logEntity.setType("INFO");
-            logEntity.setInfo(userEntity.getUsername() + ":" + "Pristupio servisu.");
+            logEntity.setInfo(userEntity.getUsername() + ":" + "Pristupio/la servisu.");
             logRepository.saveAndFlush(logEntity);
             return modelMapper.map(userEntity, UserDto.class);
         }
 
-        throw new HttpException(HttpStatus.UNAUTHORIZED, "Credentials invalid.");
+        throw new HttpException(HttpStatus.UNAUTHORIZED, "Kredencijali nisu validni.");
     }
 
     public UserDto adminlogin(LoginDto loginDto) {
         UserEntity userEntity = userRepository.findByUsername(loginDto.getUsername());
         if (userEntity == null) {
-            throw new HttpException(HttpStatus.UNAUTHORIZED, "Credentials invalid.");
+            throw new HttpException(HttpStatus.UNAUTHORIZED, "Kredencijali nisu validni.");
         }
 
         if (canLogin(userEntity, loginDto.getPassword()) && userEntity.getIsAdmin()) {
             return modelMapper.map(userEntity, UserDto.class);
         }
 
-        throw new HttpException(HttpStatus.UNAUTHORIZED, "Credentials invalid.");
+        throw new HttpException(HttpStatus.UNAUTHORIZED, "Kredencijali nisu validni.");
     }
 
     private Boolean canLogin(UserEntity userEntity, String password) {
         if (userEntity.getDisabled()) {
-            throw new HttpException(HttpStatus.UNAUTHORIZED, "Account is disabled.");
+            throw new HttpException(HttpStatus.UNAUTHORIZED, "Nalog je deaktiviran.");
         }
         return passwordEncoder.matches(password, userEntity.getPassword());
     }

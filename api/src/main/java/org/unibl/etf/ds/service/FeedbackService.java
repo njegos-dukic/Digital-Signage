@@ -39,13 +39,13 @@ public class FeedbackService {
         feedbackEntity.setContent(newFeedbackDto.getFeedback());
         UserEntity userEntity = userService.getById(newFeedbackDto.getUserId());
         if (userEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "User with that Id does not exist.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Korisnik sa datim identifikatorom ne postoji.");
         }
         feedbackEntity.setUser(userEntity);
         LogEntity logEntity = new LogEntity();
         logEntity.setDateTime(Instant.now());
         logEntity.setType("INFO");
-        logEntity.setInfo(userEntity.getUsername() + ":" + "Ostavio feedback.");
+        logEntity.setInfo(userEntity.getUsername() + ":" + "Ostavio/la feedback.");
         logRepository.saveAndFlush(logEntity);
         return feedbackRepository.saveAndFlush(feedbackEntity);
     }
@@ -53,7 +53,7 @@ public class FeedbackService {
     public Boolean delete(Integer id) {
         FeedbackEntity feedbackEntity = feedbackRepository.findById(id).orElse(null);
         if (feedbackEntity == null) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Feedback with that Id does not exist.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Poruka sa datim identifikatorom ne postoji.");
         }
 
         feedbackRepository.deleteById(feedbackEntity.getId());

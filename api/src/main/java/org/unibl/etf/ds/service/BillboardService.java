@@ -36,7 +36,7 @@ public class BillboardService {
     public Boolean delete(Integer id) {
         BillboardEntity billboardEntity = billboardRepository.findById(id).orElse(null);
         if (billboardEntity == null || billboardEntity.getDeleted()) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Billboard with that Id does not exist.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Bilbord sa datim identifikatorom ne postoji.");
         }
 
         billboardEntity.setDeleted(true);
@@ -47,7 +47,7 @@ public class BillboardService {
     public BillboardEntity update(BillboardDto billboardDto) {
         BillboardEntity billboardEntity = billboardRepository.findById(billboardDto.getId()).orElse(null);
         if (billboardEntity == null || billboardEntity.getDeleted()) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Billboard with that Id does not exist.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Bilbord sa datim identifikatorom ne postoji.");
         }
 
         billboardEntity.setName(billboardDto.getName());
@@ -61,7 +61,7 @@ public class BillboardService {
     public Boolean toggleAvailabile(Integer id) {
         BillboardEntity billboardEntity = billboardRepository.findById(id).orElse(null);
         if (billboardEntity == null || billboardEntity.getDeleted()) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "Billboard with that Id does not exist.");
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Bilbord sa datim identifikatorom ne postoji.");
         }
 
         billboardEntity.setAvailable(!billboardEntity.getAvailable());
